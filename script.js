@@ -551,52 +551,60 @@ const placeholderGradients = [
 let currentArtworkFilter = 'all-image';
 
 // ── DOM Elements ──
-const navBtns = document.querySelectorAll('.nav-btn');
-const viewSections = document.querySelectorAll('.view-section');
+const navItems    = document.querySelectorAll('.nav-item');
+const brandBtn    = document.querySelector('.brand-btn');
+const views       = document.querySelectorAll('.view');
 
-const artworkFilterBtns = document.querySelectorAll('.filter-chip');
+const artworkFilterBtns = document.querySelectorAll('.filter-pill');
 
-const gridCommercial = document.getElementById('grid-commercial');
-const gridCinematic = document.getElementById('grid-cinematic');
-const gridArtwork = document.getElementById('grid-artwork');
-const gridLiveaction = document.getElementById('grid-liveaction');
+const gridCommercial  = document.getElementById('grid-commercial');
+const gridCinematic   = document.getElementById('grid-cinematic');
+const gridArtwork     = document.getElementById('grid-artwork');
+const gridLiveaction  = document.getElementById('grid-liveaction');
 const gridPhotography = document.getElementById('grid-photography');
-const gridDashboard = document.getElementById('grid-dashboard');
+const gridDashboard   = document.getElementById('grid-dashboard');
 
 const modalBackdrop = document.getElementById('modalBackdrop');
-const projectModal = document.getElementById('projectModal');
+const projectModal  = document.getElementById('projectModal');
 const modalCloseBtn = document.getElementById('modalCloseBtn');
-const modalBody = document.getElementById('modalBody');
+const modalBody     = document.getElementById('modalBody');
 
 // ── Initialization ──
 function init() {
   initNavigation();
   initArtworkFilters();
   renderAllViews();
-  initFilmStrips();
 }
 
-// ── Navigation Logic ──
-function initNavigation() {
-  navBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Update Buttons
-      navBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+// ── Navigation ──
+function switchView(targetView) {
+  const targetId = 'view-' + targetView;
 
-      // Update Views
-      const targetViewId = 'view-' + btn.dataset.view;
-      viewSections.forEach(section => {
-        section.classList.remove('active');
-        if (section.id === targetViewId) {
-          section.classList.add('active');
-        }
-      });
-    });
+  // buttons
+  navItems.forEach(b => {
+    b.classList.toggle('active', b.dataset.view === targetView);
+  });
+
+  // sections
+  views.forEach(v => {
+    if (v.id === targetId) {
+      v.classList.add('active');
+    } else {
+      v.classList.remove('active');
+    }
   });
 }
 
-// ── Artwork Filter Logic ──
+function initNavigation() {
+  navItems.forEach(btn => {
+    btn.addEventListener('click', () => switchView(btn.dataset.view));
+  });
+  if (brandBtn) {
+    brandBtn.addEventListener('click', () => switchView('overview'));
+  }
+}
+
+// ── Artwork Filters ──
 function initArtworkFilters() {
   artworkFilterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -608,48 +616,41 @@ function initArtworkFilters() {
   });
 }
 
+// ── Float animation assignment (deterministic) ──
+const FLOAT_ANIMS = ['float-a', 'float-b', 'float-c', 'float-d', 'float-e'];
+
+function floatProps(index) {
+  const anim    = FLOAT_ANIMS[index % 5];
+  const delay   = ((index * 1.7) % 5).toFixed(1);
+  const dur     = (11 + (index * 2.3) % 7).toFixed(1);
+  return `--anim-name:${anim}; --anim-delay:${delay}s; --anim-dur:${dur}s;`;
+}
+
 // ── Render ──
 function renderAllViews() {
-  // Commercial Custom Order
   const commercialOrder = [101, 4, 7, 3, 2, 1, 102];
   const commercialProjects = projects
     .filter(p => p.type === 'video' && (p.category === 'product' || p.category === 'ad' || p.category === 'seasonal'))
     .sort((a, b) => {
-      let idxA = commercialOrder.indexOf(a.id);
-      let idxB = commercialOrder.indexOf(b.id);
-      if(idxA === -1) idxA = 999;
-      if(idxB === -1) idxB = 999;
-      return idxA - idxB;
+      let ia = commercialOrder.indexOf(a.id); let ib = commercialOrder.indexOf(b.id);
+      if (ia === -1) ia = 999; if (ib === -1) ib = 999;
+      return ia - ib;
     });
+  gridCommercial.innerHTML = commercialProjects.map((p, i) => createFloatCard(p, i)).join('');
 
-  const topRow = commercialProjects.slice(0, 3);
-  const bottomRow = commercialProjects.slice(3);
-
-  gridCommercial.innerHTML = 
-    topRow.map((p, i) => createProjectCard(p, i)).join('') +
-    `<div style="grid-column: 1 / -1; width: 100%; height: 1px; margin: 10px 0; border-top: 1px dashed var(--border-subtle); display:flex; align-items:center; justify-content:center;">
-       <span style="background:var(--bg-base); padding:0 15px; color:var(--text-dim); font-size:0.75rem; letter-spacing:0.2em; font-family:var(--font-mono); transform:translateY(-50%);">VERTICAL_SHORTS</span>
-     </div>` +
-    bottomRow.map((p, i) => createProjectCard(p, i + 3)).join('');
-
-  // Cinematic
   const cinematicProjects = projects.filter(p => p.type === 'video' && (p.category === 'short-film' || p.category === 'animation'));
-  gridCinematic.innerHTML = cinematicProjects.map((p, i) => createProjectCard(p, i)).join('');
+  gridCinematic.innerHTML = cinematicProjects.map((p, i) => createFloatCard(p, i)).join('');
 
-  // Artwork
   renderArtworkView();
 
-  // Live Action
   const liveactionProjects = projects.filter(p => p.category === 'liveaction');
-  gridLiveaction.innerHTML = liveactionProjects.map((p, i) => createProjectCard(p, i)).join('');
+  gridLiveaction.innerHTML = liveactionProjects.map((p, i) => createFloatCard(p, i)).join('');
 
-  // Photography
   const photographyProjects = projects.filter(p => p.category === 'photography');
-  gridPhotography.innerHTML = photographyProjects.map((p, i) => createProjectCard(p, i)).join('');
+  gridPhotography.innerHTML = photographyProjects.map((p, i) => createFloatCard(p, i, 'card-square')).join('');
 
-  // Dashboard
   const dashboardProjects = projects.filter(p => p.category === 'dashboard');
-  gridDashboard.innerHTML = dashboardProjects.map((p, i) => createProjectCard(p, i)).join('');
+  gridDashboard.innerHTML = dashboardProjects.map((p, i) => createFloatCard(p, i, 'card-wide featured')).join('');
 
   attachCardEvents();
 }
@@ -659,66 +660,41 @@ function renderArtworkView() {
   if (currentArtworkFilter !== 'all-image') {
     artworkProjects = artworkProjects.filter(p => p.category === currentArtworkFilter);
   }
-  gridArtwork.innerHTML = artworkProjects.map((p, i) => createProjectCard(p, i)).join('');
-  attachCardEvents(gridArtwork); // Re-attach only for artwork due to re-render
+  gridArtwork.innerHTML = artworkProjects.map((p, i) => createFloatCard(p, i)).join('');
+  attachCardEvents(gridArtwork);
 }
 
-function createProjectCard(project, index) {
-  const isVertical = project.orientation === 'vertical';
-  const verticalClass = isVertical ? ' vertical' : '';
-  const isVideo = project.type === 'video';
-  const isPhotography = project.category === 'photography';
-  const photographyClass = isPhotography ? ' photography-card' : '';
+// ── Float Card ──
+function createFloatCard(project, index, extraClass = '') {
+  const isVertical   = project.orientation === 'vertical';
+  const shapeClass   = extraClass
+    ? extraClass
+    : isVertical
+      ? 'card-portrait'
+      : (index % 5 === 0 ? 'card-wide featured' : '');
 
-  let thumbnailBg = '';
-  if (!project.thumbnail) {
-    thumbnailBg = `background: ${placeholderGradients[project.id % placeholderGradients.length]};`;
-  }
+  const placeholderStyle = !project.thumbnail
+    ? `style="background:${placeholderGradients[project.id % placeholderGradients.length]}"`
+    : '';
 
-  // HUD Overlay content
-  const overlayContent = `
-    <div class="hud-loader">
-      <span>> INIT_LINK...</span>
-      <span>> TARGET: PRJ_${project.id}</span>
-      <span>> FORMAT: ${isVideo ? 'VIDEO' : 'IMAGE'}</span>
-      <span style="color: #fff">> [ACCESS]</span>
+  return `
+    <div class="float-card ${shapeClass}" data-id="${project.id}"
+         style="${floatProps(index)}">
+      <div class="float-card-inner" ${placeholderStyle}>
+        ${project.thumbnail ? `<img src="${project.thumbnail}" alt="${project.title}" loading="lazy">` : ''}
+        <div class="float-card-overlay">
+          <div class="float-card-info">
+            <span class="float-card-cat">${project.categoryLabel}</span>
+            <h3 class="float-card-title">${project.title}</h3>
+          </div>
+        </div>
+      </div>
     </div>
   `;
-
-  const frameNum = String(index + 1).padStart(3, '0');
-
-  let cardHTML = `
-    <div class="project-card${verticalClass}${photographyClass}" data-id="${project.id}" style="animation-delay: ${index * 0.05}s">
-      <span class="frame-number">F-${frameNum}</span>
-      <div class="card-thumbnail" style="${thumbnailBg}">
-        <img src="${project.thumbnail || ''}" alt="${project.title}">
-        <div class="card-overlay">${overlayContent}</div>
-      </div>
-  `;
-
-  if (isVideo) {
-    cardHTML += `
-      <div class="card-info">
-        <div class="card-category">SYS.${project.category.toUpperCase()}</div>
-        <h3 class="card-title">${project.title}</h3>
-        <p class="card-desc">${project.desc}</p>
-      </div>
-    `;
-  } else if (!isPhotography) {
-     cardHTML += `
-      <div class="card-info" style="padding: 12px 20px; border-top: none;">
-        <div class="card-category" style="margin: 0;">IMG.${project.category.toUpperCase()}</div>
-      </div>
-    `;
-  }
-
-  cardHTML += `</div>`;
-  return cardHTML;
 }
 
 function attachCardEvents(container = document) {
-  container.querySelectorAll('.project-card').forEach(card => {
-    // Avoid double attaching if re-rendering partials
+  container.querySelectorAll('.float-card').forEach(card => {
     card.removeEventListener('click', handleCardClick);
     card.addEventListener('click', handleCardClick);
   });
@@ -843,75 +819,3 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', init);
-
-// ═══════════════════════════════════════
-//  FILM STRIP BEHAVIOR  (ver3)
-// ═══════════════════════════════════════
-
-function initFilmStrips() {
-  const filmScrolls = document.querySelectorAll('.film-strip-scroll');
-
-  filmScrolls.forEach(scrollEl => {
-    const section = scrollEl.closest('.view-section');
-    const sectionId = section.id.replace('view-', '');
-    const progressFill = document.getElementById('fprog-' + sectionId);
-
-    // ── Wheel → horizontal scroll ──
-    scrollEl.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      scrollEl.scrollLeft += e.deltaY * 1.8;
-      updateFilmProgress(scrollEl, progressFill);
-    }, { passive: false });
-
-    // ── Drag to scroll ──
-    let isDragging = false;
-    let startX = 0;
-    let scrollStart = 0;
-
-    scrollEl.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.pageX - scrollEl.offsetLeft;
-      scrollStart = scrollEl.scrollLeft;
-      scrollEl.classList.add('is-dragging');
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const x = e.pageX - scrollEl.offsetLeft;
-      const delta = (x - startX) * 1.6;
-      scrollEl.scrollLeft = scrollStart - delta;
-      updateFilmProgress(scrollEl, progressFill);
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (!isDragging) return;
-      isDragging = false;
-      scrollEl.classList.remove('is-dragging');
-    });
-
-    // Touch support
-    let touchStartX = 0;
-    let touchScrollStart = 0;
-
-    scrollEl.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].pageX;
-      touchScrollStart = scrollEl.scrollLeft;
-    }, { passive: true });
-
-    scrollEl.addEventListener('touchmove', (e) => {
-      const delta = touchStartX - e.touches[0].pageX;
-      scrollEl.scrollLeft = touchScrollStart + delta;
-      updateFilmProgress(scrollEl, progressFill);
-    }, { passive: true });
-
-    // Track scroll for progress
-    scrollEl.addEventListener('scroll', () => updateFilmProgress(scrollEl, progressFill));
-  });
-}
-
-function updateFilmProgress(scrollEl, progressEl) {
-  if (!progressEl) return;
-  const max = scrollEl.scrollWidth - scrollEl.clientWidth;
-  const pct = max > 0 ? (scrollEl.scrollLeft / max) * 100 : 0;
-  progressEl.style.width = pct + '%';
-}

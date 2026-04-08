@@ -3,289 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L.NAHYUN // AI PORTFOLIO</title>
-  <meta name="description" content="AI 아티스트 포트폴리오 - AI 영상 및 이미지 기획/제작 대시보드">
+  <title>LEE NAHYUN — AI CREATOR</title>
+  <meta name="description" content="AI 아티스트 포트폴리오 — AI 영상 및 이미지 기획/제작">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
-  <!-- CRT Scanline Overlay -->
-  <div class="scanlines"></div>
 
-  <!-- Global App Layout -->
-  <div class="app-container">
-    
-    <!-- ═══ Sidebar / Nav ═══ -->
-    <aside class="sidebar">
-       <div class="sidebar-header">
-           <div class="brand-box">
-             <div class="brand-accent"></div>
-             <h1>NAHYUN</h1>
-             <div class="brand-sub">AI.CREATOR_</div>
-           </div>
-       </div>
-       
-       <nav class="sidebar-nav" id="sidebarNav">
-           <button class="nav-btn active" data-view="overview">
-              <span class="nav-icon">[+]</span>
-              <span class="nav-text">OVERVIEW</span>
-           </button>
-           <button class="nav-btn" data-view="commercial">
-              <span class="nav-icon">[■]</span>
-              <span class="nav-text">COMMERCIAL</span>
-           </button>
-           <button class="nav-btn" data-view="cinematic">
-              <span class="nav-icon">[▶]</span>
-              <span class="nav-text">CINEMATICS</span>
-           </button>
-           <button class="nav-btn" data-view="artwork">
-              <span class="nav-icon">[◈]</span>
-              <span class="nav-text">ARTWORK</span>
-           </button>
-           <button class="nav-btn" data-view="liveaction">
-              <span class="nav-icon">[🎥]</span>
-              <span class="nav-text">LIVE-ACTION</span>
-           </button>
-           <button class="nav-btn" data-view="photography">
-              <span class="nav-icon">[📸]</span>
-              <span class="nav-text">PHOTOGRAPHY</span>
-           </button>
-           <button class="nav-btn" data-view="dashboard">
-              <span class="nav-icon">[📊]</span>
-              <span class="nav-text">DASHBOARD</span>
-           </button>
-       </nav>
+  <!-- Atmospheric grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
 
-       <div class="sidebar-footer">
-          <div class="status-box">
-            <span class="status-dot"></span>
-            SYS.READY
-          </div>
-          <p class="copyright">© 2026. NAHYUN<br>ALL RIGHTS RESERVED.</p>
-       </div>
-    </aside>
+  <!-- Minimal header -->
+  <header class="site-header">
+    <div class="header-brand">
+      <button class="brand-btn" data-view="overview">NAHYUN</button>
+    </div>
+    <nav class="site-nav" id="siteNav">
+      <button class="nav-item active" data-view="overview">OVERVIEW</button>
+      <button class="nav-item" data-view="commercial">COMMERCIAL</button>
+      <button class="nav-item" data-view="cinematic">CINEMATICS</button>
+      <button class="nav-item" data-view="artwork">ARTWORK</button>
+      <button class="nav-item" data-view="liveaction">LIVE-ACTION</button>
+      <button class="nav-item" data-view="photography">PHOTOGRAPHY</button>
+      <button class="nav-item" data-view="dashboard">DASHBOARD</button>
+    </nav>
+    <div class="header-right">
+      <span class="availability-dot"></span>
+      <span class="availability-text">AVAILABLE</span>
+    </div>
+  </header>
 
-    <!-- ═══ Main Viewport ═══ -->
-    <main class="viewport">
-       
-       <!-- V1: OVERVIEW -->
-       <section class="view-section active" id="view-overview">
-          <div class="view-header">
-             <h2>SYS.PROFILE // <span class="accent-text">OVERVIEW</span></h2>
-          </div>
-          <div class="view-content">
-             <div class="profile-grid">
-               <!-- Stats / Bio -->
-               <div class="hud-panel about-panel">
-                 <div class="panel-header">
-                    <span class="panel-title">USER.BIO</span>
-                 </div>
-                 <div class="panel-body">
-                   <h3 class="glitch-text" data-text="LEE NA HYUN AI CREATOR">LEE NA HYUN <span class="title-role">AI CREATOR</span></h3>
-                   <div class="bio-text">
-                     <p>방송 현장 조연출과 인하우스 영상 PD 출신의 실전 경험을 바탕으로, AI 모델을 결합한 하이브리드 자동화 크리에이티브 워크플로를 설계합니다.</p>
-                     <p>상업적 완성도를 최우선으로 하며, '텍스트 왜곡', '일관성 부재' 등 생성형 AI 결과물의 고질적 문제를 기술적 아키텍처 및 프롬프트 제어를 통해 해결하는 시스템 기반 크리에이터입니다.</p>
-                   </div>
-                 </div>
-               </div>
+  <!-- Main stage -->
+  <main class="stage" id="stage">
 
-               <!-- Skills / Tech Stack -->
-               <div class="hud-panel skills-panel">
-                 <div class="panel-header">
-                    <span class="panel-title">TECH.STATS</span>
-                 </div>
-                 <div class="panel-body">
-                   <div class="skill-row">
-                     <div class="skill-info">
-                       <span class="skill-name">VIDEO_GEN</span>
-                       <span class="skill-val">95%</span>
-                     </div>
-                     <div class="skill-bar"><div class="fill" style="width: 95%"></div></div>
-                     <p class="skill-sub">Kling, Veo 등 고품질 렌더링 및 모션 제어</p>
-                   </div>
-                   <div class="skill-row">
-                     <div class="skill-info">
-                       <span class="skill-name">IMG_PIPELINE</span>
-                       <span class="skill-val">90%</span>
-                     </div>
-                     <div class="skill-bar"><div class="fill" style="width: 90%"></div></div>
-                     <p class="skill-sub">ComfyUI 활용 하이브리드 자동화 프레임워크 설계</p>
-                   </div>
-                   <div class="skill-row">
-                     <div class="skill-info">
-                       <span class="skill-name">PROMPT_ENG</span>
-                       <span class="skill-val">88%</span>
-                     </div>
-                     <div class="skill-bar"><div class="fill" style="width: 88%"></div></div>
-                     <p class="skill-sub">결과 시뮬레이션 기반 디테일 네거티브/포지티브 통제</p>
-                   </div>
-                   <div class="skill-row">
-                     <div class="skill-info">
-                       <span class="skill-name">POST_PROD</span>
-                       <span class="skill-val">98%</span>
-                     </div>
-                     <div class="skill-bar"><div class="fill" style="width: 98%"></div></div>
-                     <p class="skill-sub">오디오 및 영상 마스터 믹싱 (Premiere, AE)</p>
-                   </div>
-                 </div>
-               </div>
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="overview-wrap">
+        <div class="overview-hero">
+          <p class="overview-index">001</p>
+          <h1 class="hero-title">
+            <span>LEE</span>
+            <em>NAHYUN</em>
+          </h1>
+          <p class="hero-role">AI Creator &amp; Visual Director</p>
+        </div>
 
-               <!-- Quick Tools -->
-               <div class="hud-panel tools-panel">
-                 <div class="panel-header">
-                    <span class="panel-title">EQUIPPED.TOOLS</span>
-                 </div>
-                 <div class="panel-body">
-                   <div class="tool-category">
-                     <div class="tool-category-name">[GEN_AI]</div>
-                     <div class="tools-grid-hex">
-                       <span class="tool-tag">ComfyUI</span>
-                       <span class="tool-tag">Nano Banana</span>
-                       <span class="tool-tag">Kling</span>
-                       <span class="tool-tag">Veo</span>
-                       <span class="tool-tag">Midjourney</span>
-                     </div>
-                   </div>
-                   <div class="tool-category">
-                     <div class="tool-category-name">[POST_PROD]</div>
-                     <div class="tools-grid-hex">
-                       <span class="tool-tag">Premiere Pro</span>
-                       <span class="tool-tag">After Effects</span>
-                     </div>
-                   </div>
-                   <div class="tool-category">
-                     <div class="tool-category-name">[IMG_EDIT]</div>
-                     <div class="tools-grid-hex">
-                       <span class="tool-tag">Photoshop</span>
-                     </div>
-                   </div>
-                   <div class="tool-category">
-                     <div class="tool-category-name">[AI_AGENT]</div>
-                     <div class="tools-grid-hex">
-                       <span class="tool-tag">Antigravity</span>
-                       <span class="tool-tag">Claude</span>
-                       <span class="tool-tag">NotebookLM</span>
-                       <span class="tool-tag">ElevenLabs</span>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             </div>
+        <div class="overview-body">
+          <div class="overview-bio">
+            <p>방송 현장 조연출과 인하우스 영상 PD 출신의 실전 경험을 바탕으로, AI 모델을 결합한 하이브리드 자동화 크리에이티브 워크플로를 설계합니다.</p>
+            <p>상업적 완성도를 최우선으로 하며, 생성형 AI 결과물의 고질적 문제를 기술적 아키텍처 및 프롬프트 제어를 통해 해결하는 시스템 기반 크리에이터입니다.</p>
           </div>
-       </section>
 
-       <!-- V2: COMMERCIAL -->
-       <section class="view-section film-section" id="view-commercial">
-          <div class="view-header">
-             <h2>COMM.DB // <span class="accent-text">COMMERCIAL</span></h2>
-             <p class="view-desc">제품 홍보, 커머스 콘텐츠, 브랜드 대상 광고 영상 에셋</p>
-             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
+          <div class="overview-skills">
+            <div class="skill-row">
+              <span class="skill-name">Video Generation</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:95%"></div></div>
+            </div>
+            <div class="skill-row">
+              <span class="skill-name">Image Pipeline</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div>
+            </div>
+            <div class="skill-row">
+              <span class="skill-name">Prompt Engineering</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div>
+            </div>
+            <div class="skill-row">
+              <span class="skill-name">Post Production</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:98%"></div></div>
+            </div>
           </div>
-          <div class="film-strip-outer">
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-strip-scroll">
-                <div class="works-grid" id="grid-commercial"></div>
-             </div>
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-commercial"></div></div>
-          </div>
-       </section>
 
-       <!-- V3: CINEMATIC -->
-       <section class="view-section film-section" id="view-cinematic">
-          <div class="view-header">
-             <h2>CINE.DB // <span class="accent-text">CINEMATICS</span></h2>
-             <p class="view-desc">단편 영화, 단편 애니메이션, 스토리보드 기반 기획 영상</p>
-             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
+          <div class="overview-tools">
+            <span>ComfyUI</span><span>Kling</span><span>Veo</span><span>Midjourney</span>
+            <span>Nano Banana</span><span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span>
           </div>
-          <div class="film-strip-outer">
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-strip-scroll">
-                <div class="works-grid" id="grid-cinematic"></div>
-             </div>
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-cinematic"></div></div>
-          </div>
-       </section>
+        </div>
+      </div>
+    </section>
 
-       <!-- V4: ARTWORK -->
-       <section class="view-section film-section" id="view-artwork">
-          <div class="view-header">
-             <h2>IMG.DB // <span class="accent-text">ARTWORK</span></h2>
-             <p class="view-desc">캐릭터 일관성 도출, 컨셉 아트 도출, 패키지 정밀 오버레이 테스트</p>
-             <div class="filter-main">
-                <button class="filter-chip active" data-sub="all-image">[ALL]</button>
-                <button class="filter-chip" data-sub="character">[CHARACTER]</button>
-                <button class="filter-chip" data-sub="concept-art">[CONCEPT]</button>
-                <button class="filter-chip" data-sub="portrait">[PORTRAIT]</button>
-                <button class="filter-chip" data-sub="product-image">[PRODUCT]</button>
-             </div>
-             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
-          </div>
-          <div class="film-strip-outer">
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-strip-scroll" id="scroll-artwork">
-                <div class="works-grid" id="grid-artwork"></div>
-             </div>
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-artwork"></div></div>
-          </div>
-       </section>
+    <!-- COMMERCIAL -->
+    <section class="view" id="view-commercial">
+      <div class="view-label">
+        <span class="label-index">002</span>
+        <span class="label-title">Commercial</span>
+      </div>
+      <div class="float-stage" id="grid-commercial"></div>
+    </section>
 
-       <!-- V5: LIVE-ACTION -->
-       <section class="view-section film-section" id="view-liveaction">
-          <div class="view-header">
-             <h2>REAL.DB // <span class="accent-text">LIVE-ACTION</span></h2>
-             <p class="view-desc">실사 기반의 감성 숏폼 및 제품 커머셜 영상, 인터뷰</p>
-             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
-          </div>
-          <div class="film-strip-outer">
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-strip-scroll">
-                <div class="works-grid" id="grid-liveaction"></div>
-             </div>
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-liveaction"></div></div>
-          </div>
-       </section>
+    <!-- CINEMATIC -->
+    <section class="view" id="view-cinematic">
+      <div class="view-label">
+        <span class="label-index">003</span>
+        <span class="label-title">Cinematics</span>
+      </div>
+      <div class="float-stage" id="grid-cinematic"></div>
+    </section>
 
-       <!-- V6: PHOTOGRAPHY -->
-       <section class="view-section film-section" id="view-photography">
-          <div class="view-header">
-             <h2>PHOTO.DB // <span class="accent-text">PHOTOGRAPHY</span></h2>
-             <p class="view-desc">SONY A7M4 카메라 및 라이트룸 리터칭 기반 실사 사진 촬영 작업물</p>
-             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
-          </div>
-          <div class="film-strip-outer">
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-strip-scroll">
-                <div class="works-grid" id="grid-photography"></div>
-             </div>
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-photography"></div></div>
-          </div>
-       </section>
+    <!-- ARTWORK -->
+    <section class="view" id="view-artwork">
+      <div class="view-label">
+        <span class="label-index">004</span>
+        <span class="label-title">Artwork</span>
+      </div>
+      <div class="artwork-filters" id="artworkFilters">
+        <button class="filter-pill active" data-sub="all-image">All</button>
+        <button class="filter-pill" data-sub="character">Character</button>
+        <button class="filter-pill" data-sub="concept-art">Concept</button>
+        <button class="filter-pill" data-sub="portrait">Portrait</button>
+        <button class="filter-pill" data-sub="product-image">Product</button>
+      </div>
+      <div class="float-stage" id="grid-artwork"></div>
+    </section>
 
-       <!-- V7: DASHBOARD -->
-       <section class="view-section film-section" id="view-dashboard">
-          <div class="view-header">
-             <h2>APP.DB // <span class="accent-text">DASHBOARD</span></h2>
-             <p class="view-desc">유튜브 성과지표 분석 데이터를 시각화한 커스텀 웹 애플리케이션</p>
-             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
-          </div>
-          <div class="film-strip-outer">
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-strip-scroll">
-                <div class="works-grid" id="grid-dashboard"></div>
-             </div>
-             <div class="sprocket-rail" aria-hidden="true"></div>
-             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-dashboard"></div></div>
-          </div>
-       </section>
-    </main>
-  </div>
+    <!-- LIVE-ACTION -->
+    <section class="view" id="view-liveaction">
+      <div class="view-label">
+        <span class="label-index">005</span>
+        <span class="label-title">Live-Action</span>
+      </div>
+      <div class="float-stage" id="grid-liveaction"></div>
+    </section>
 
-  <!-- ═══ Global Project Modal ═══ -->
+    <!-- PHOTOGRAPHY -->
+    <section class="view" id="view-photography">
+      <div class="view-label">
+        <span class="label-index">006</span>
+        <span class="label-title">Photography</span>
+      </div>
+      <div class="float-stage" id="grid-photography"></div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="view" id="view-dashboard">
+      <div class="view-label">
+        <span class="label-index">007</span>
+        <span class="label-title">Dashboard</span>
+      </div>
+      <div class="float-stage" id="grid-dashboard"></div>
+    </section>
+
+  </main>
+
+  <!-- Project Modal -->
   <div class="modal-backdrop" id="modalBackdrop"></div>
   <div class="modal hud-modal" id="projectModal">
     <div class="modal-decoration top-left"></div>
@@ -293,11 +153,9 @@
     <div class="modal-decoration bottom-left"></div>
     <div class="modal-decoration bottom-right"></div>
     <div class="modal-close">
-      <button class="modal-close-btn" id="modalCloseBtn" aria-label="닫기">[ CLOSE_WIN ]</button>
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="닫기">[ CLOSE ]</button>
     </div>
-    <div class="modal-body" id="modalBody">
-      <!-- Dynamically populated -->
-    </div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 
   <script src="script.js"></script>
