@@ -412,6 +412,135 @@ productImageFiles.forEach(file => {
   });
 });
 
+const photographyFiles = [
+  "1.png", "2.png", "3.png", "4.jpg", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png",
+  "11.png", "12.png", "13.png", "14.jpg", "15.png", "16.png", "17.png", "18.png", "19.JPG", "20.JPG"
+];
+
+photographyFiles.forEach(file => {
+  projects.push({
+    id: idCounter++, type: 'image', category: 'photography', categoryLabel: '실사 이미지',
+    title: 'Photography', desc: 'SONY A7M4 & Lightroom Classic 리터칭 결과물', thumbnail: `images/AI Image/Photography/${file}`,
+    badge: 'personal', badgeLabel: '📸 Photo', tools: ['SONY A7M4', 'Lightroom'], orientation: 'horizontal',
+    scenes: [], images: [`images/AI Image/Photography/${file}`], tags: ['사진촬영', '라이트룸'], brief: '', process: [], toolsDetail: ['SONY A7M4', 'Lightroom Classic']
+  });
+});
+
+const liveActionVideos = [
+  {
+    id: 201, type: 'video', category: 'liveaction', categoryLabel: '실사 영상',
+    title: '블루밍버블', desc: '식물과 교감하는 일상을 따뜻한 무드로 담아내어 타겟 시청자(식집사)의 깊은 공감대를 이끌어낸 감성 숏폼.',
+    thumbnail: 'images/Thumbnails/블루밍버블.png', badge: 'company', badgeLabel: '🎥 실사 숏폼',
+    tools: ['A7M4', 'Premiere'], driveId: '1TtotSNse0TqE-a0xPl9xxuyFw2opmFlk', orientation: 'vertical',
+    scenes: [
+      'images/주요장면/블루밍버블/시퀀스 01.00_02_00_01.스틸 039.png', 'images/주요장면/블루밍버블/시퀀스 01.00_02_02_14.스틸 040.png',
+      'images/주요장면/블루밍버블/시퀀스 01.00_02_03_03.스틸 041.png', 'images/주요장면/블루밍버블/시퀀스 01.00_02_03_12.스틸 042.png',
+      'images/주요장면/블루밍버블/시퀀스 01.00_02_05_01.스틸 043.png', 'images/주요장면/블루밍버블/시퀀스 01.00_02_07_13.스틸 044.png'
+    ],
+    tags: ['실사숏폼', '감성연출'],
+    brief: '자연광을 적극 활용한 촬영과 시네마틱한 컬러 그레이딩(색보정)을 통해 몽환적이고 따뜻한 라이프스타일 룩을 완성함.',
+    process: [], toolsDetail: ['SONY A7M4', 'Premiere Pro']
+  },
+  {
+    id: 202, type: 'video', category: 'liveaction', categoryLabel: '실사 영상',
+    title: 'HOW TO 뿌리영양제', desc: '제품의 올바른 사용법을 직관적인 앵글로 담아내어 시청자의 편의성을 높인 실용적 가이드 영상.',
+    thumbnail: 'images/Thumbnails/뿌리영양제.png', badge: 'company', badgeLabel: '🎥 가이드',
+    tools: ['A7M4', 'Premiere'], driveId: '1i6yHs4zkGyhTsg-LQYjTQzSs2kai3eYU', orientation: 'vertical',
+    scenes: [
+      'images/주요장면/뿌리영양제/시퀀스 01.00_03_30_22.스틸 033.png', 'images/주요장면/뿌리영양제/시퀀스 01.00_03_33_08.스틸 034.png',
+      'images/주요장면/뿌리영양제/시퀀스 01.00_03_34_07.스틸 035.png', 'images/주요장면/뿌리영양제/시퀀스 01.00_03_36_05.스틸 036.png',
+      'images/주요장면/뿌리영양제/시퀀스 01.00_03_37_22.스틸 037.png', 'images/주요장면/뿌리영양제/시퀀스 01.00_03_44_11.스틸 038.png'
+    ],
+    tags: ['가이드', '숏폼'],
+    brief: '제품의 올바른 사용법을 직관적인 앵글로 담아내어 시청자의 편의성을 높임.',
+    process: [], toolsDetail: ['SONY A7M4', 'Premiere Pro']
+  },
+  {
+    id: 203, type: 'video', category: 'liveaction', categoryLabel: '실사 영상',
+    title: '다이소 식물 아이템 리뷰', desc: 'SNS 트렌드를 반영하여 화제성 높은 타사(다이소) 아이템을 직접 구매 후, 활용하는 모습을 기획한 바이럴 콘텐츠.',
+    thumbnail: 'images/Thumbnails/다이소.png', badge: 'company', badgeLabel: '🎥 바이럴',
+    tools: ['A7M4', 'Premiere'], driveId: '1oFDI3Byt37doGDW5cyWupMHD8Hd9KqF7', orientation: 'vertical',
+    scenes: [
+      'images/주요장면/다이소/시퀀스 01.00_01_32_15.스틸 027.png', 'images/주요장면/다이소/시퀀스 01.00_01_34_03.스틸 028.png',
+      'images/주요장면/다이소/시퀀스 01.00_01_37_23.스틸 029.png', 'images/주요장면/다이소/시퀀스 01.00_01_45_09.스틸 030.png',
+      'images/주요장면/다이소/시퀀스 01.00_01_50_05.스틸 031.png', 'images/주요장면/다이소/시퀀스 01.00_01_55_18.스틸 032.png'
+    ],
+    tags: ['바이럴', '리뷰'],
+    brief: '단순 제품 홍보를 넘어 SNS 트렌드를 파악하고 타사 아이템과의 시너지를 연구해 제작한 콘텐츠.',
+    process: [], toolsDetail: ['SONY A7M4', 'Premiere Pro']
+  },
+  {
+    id: 204, type: 'video', category: 'liveaction', categoryLabel: '실사 영상',
+    title: '식물살리기 60일 프로젝트', desc: '죽어가는 식물에 제품을 투여하여 60일간 소생하는 과정을 기록한 리얼리티 다큐멘터리.',
+    thumbnail: 'images/Thumbnails/식물살리기.png', badge: 'company', badgeLabel: '🎥 다큐멘터리',
+    tools: ['A7M4', 'Premiere'], driveId: '1jxEVFvKeHQE2-xII4eEH3Btz4DzFAcWy', orientation: 'vertical',
+    scenes: [
+      'images/주요장면/식물살리기/시퀀스 01.00_00_38_08.스틸 019.png', 'images/주요장면/식물살리기/시퀀스 01.00_00_41_03.스틸 020.png',
+      'images/주요장면/식물살리기/시퀀스 01.00_00_41_20.스틸 021.png', 'images/주요장면/식물살리기/시퀀스 01.00_00_50_20.스틸 022.png',
+      'images/주요장면/식물살리기/시퀀스 01.00_00_57_19.스틸 024.png', 'images/주요장면/식물살리기/시퀀스 01.00_01_07_20.스틸 026.png'
+    ],
+    tags: ['다큐', '장기프로젝트'],
+    brief: '죽어가는 식물에 자사 제품을 투여하여 60일간 소생하는 과정을 파트별로 기록하고, 사내 연구진원(박사)의 식물학적 자문을 더해 압도적인 효능을 과학적이고 진정성 있게 증명함.',
+    process: [
+      { title: '사내 전문가 자문 (R&D Collaboration)', desc: '단순한 시각적 관찰에 그치지 않고, 박사 연구진과의 소통을 통해 생장 상태를 진단하여 텍스트와 내러티브의 전문성을 극대화함.' },
+      { title: '비주얼 스토리텔링 및 교차 편집', desc: '60일이라는 장기를 전후(Before & After)의 극적 컷으로 교차시켜 시각적 카타르시스를 선사함.' }
+    ], toolsDetail: ['SONY A7M4', 'Premiere Pro']
+  },
+  {
+    id: 205, type: 'video', category: 'liveaction', categoryLabel: '실사 영상',
+    title: '식물편집샵 대표 인터뷰', desc: '업계 전문가의 인사이트를 담아내어 브랜드의 권위를 높이고 전문성을 강조한 인터뷰 영상.',
+    thumbnail: 'images/Thumbnails/유니크플랜트.png', badge: 'company', badgeLabel: '🎥 인터뷰',
+    tools: ['A7M4', 'Premiere'], driveId: '1W2uaNmzFF5gXUSpl_kz1W-K6zqlxhVCZ', orientation: 'vertical',
+    scenes: [
+      'images/주요장면/유니크플랜트/시퀀스 01.00_00_00_00.스틸 005.png', 'images/주요장면/유니크플랜트/시퀀스 01.00_00_02_05.스틸 006.png',
+      'images/주요장면/유니크플랜트/시퀀스 01.00_00_06_23.스틸 007.png', 'images/주요장면/유니크플랜트/시퀀스 01.00_00_11_11.스틸 008.png',
+      'images/주요장면/유니크플랜트/시퀀스 01.00_00_15_08.스틸 009.png', 'images/주요장면/유니크플랜트/시퀀스 01.00_00_17_21.스틸 010.png'
+    ],
+    tags: ['인터뷰', '전문가 코멘터리'],
+    brief: '업계 전문가 인터뷰를 통해 브랜드 가치와 제품 안정성 및 효용성을 교차 증명한 영상.',
+    process: [], toolsDetail: ['SONY A7M4', 'Premiere Pro']
+  },
+  {
+    id: 206, type: 'video', category: 'liveaction', categoryLabel: '실사 영상',
+    title: '이지코트 제품 소개 ASMR', desc: '제품 특유의 질감과 소리를 백색소음으로 활용해 시청각적 쾌감을 동시에 자극하는 감각적인 제품 홍보 영상.',
+    thumbnail: 'images/Thumbnails/이지코트.png', badge: 'company', badgeLabel: '🎥 ASMR',
+    tools: ['A7M4', 'Premiere'], driveId: '1ptineNnf4KlaojxJwMm1sQcbCl1dIXkg', orientation: 'vertical',
+    scenes: [
+      'images/주요장면/이지코트/시퀀스 01.00_00_21_03.스틸 011.png', 'images/주요장면/이지코트/시퀀스 01.00_00_22_17.스틸 012.png',
+      'images/주요장면/이지코트/시퀀스 01.00_00_23_07.스틸 013.png', 'images/주요장면/이지코트/시퀀스 01.00_00_24_09.스틸 014.png',
+      'images/주요장면/이지코트/시퀀스 01.00_00_24_16.스틸 015.png', 'images/주요장면/이지코트/시퀀스 01.00_00_29_11.스틸 017.png'
+    ],
+    tags: ['ASMR', '감각적 연출'],
+    brief: '오디오 피드백을 극대화하여 시청자의 무의식에 편안함과 긍정적인 이미지를 각인시키는 전략을 취함.',
+    process: [], toolsDetail: ['SONY A7M4', 'Premiere Pro']
+  }
+];
+
+const dashboardProject = {
+  id: 401, type: 'image', category: 'dashboard', categoryLabel: '대시보드',
+  title: '유튜브 API 및 AI 기반 채널 성과 분석 대시보드 자체 구축', 
+  desc: '유튜브 스튜디오 기본 제공 지표의 한계를 넘어, VPH(시간당 조회수)와 아웃라이어(Outlier) 등 핵심 성장 지표를 수치화하고 타 채널 비교 및 키워드 분석까지 통합한 데이터 기반의 콘텐츠 기획 환경 구축.',
+  thumbnail: 'images/웹앱/유튜브 성과지표 01.png', badge: 'company', badgeLabel: '📊 Web App',
+  tools: ['API', 'Claude OPUS'], orientation: 'horizontal',
+  scenes: [], 
+  images: [
+    'images/웹앱/유튜브 성과지표 01.png', 
+    'images/웹앱/유튜브 성과지표 02.png', 
+    'images/웹앱/유튜브 성과지표 03.png'
+  ], 
+  tags: ['대시보드', '데이터분석', 'API연동'],
+  brief: '단순한 직관이나 감에 의존하는 콘텐츠 기획에서 벗어나, 객관적인 데이터 기반으로 채널의 고속 성장을 견인할 자체적인 분석 시스템이 필요했음. 이에 유튜브 API와 AI를 결합하여 영상의 폭발력과 시청자 반응을 입체적으로 측정할 수 있는 커스텀 대시보드를 개발함.',
+  process: [
+    { title: '1) 유튜브 API 연동 및 심층 데이터 추출', desc: '유튜브 스튜디오 고급 모드에서도 직관적으로 확인하기 어려운 로우 데이터(Raw Data)를 API를 통해 직접 연동 및 추출하는 파이프라인을 설계함.' },
+    { title: '2) 핵심 성장 지표 및 아웃라이어 수치화', desc: '영상의 초기 폭발력을 증명하는 VPH(Views Per Hour), 채널 평균 대비 성과를 보여주는 아웃라이어(Outlier) 지수, 그리고 실질적인 시청자 참여율 등을 자동으로 계산하는 AI 기반 분석 로직을 구현함.' },
+    { title: '3) 다차원 종합 랭킹 및 스코어링 시스템 도입', desc: '월별 조회수, 시청 몰입도(체류시간), 전환율 데이터를 종합하여 콘텐츠별 등수를 매기는 자체 스코어링 시스템을 구축함. 이를 통해 \'터지는 영상\'의 패턴을 규명하고 차기 콘텐츠 기획의 성공 확률을 높임.' },
+    { title: '4) 타 채널 비교 및 타겟 키워드 분석', desc: '자사 채널뿐만 아니라 경쟁사 채널의 퍼포먼스를 비교 분석하고, 트렌드 키워드를 추출하는 기능을 대시보드에 통합함. 분석된 데이터를 바탕으로 즉각적인 스토리보드 기획 및 썸네일/제목(SEO) 최적화에 반영함.' }
+  ], 
+  toolsDetail: ['안티그래비티', '클로드 OPUS 모델']
+};
+
+projects.push(...liveActionVideos, dashboardProject);
+
 const placeholderGradients = [
   'linear-gradient(135deg, #121216 0%, #1e1e24 100%)',
   'linear-gradient(135deg, #101511 0%, #1a241c 100%)',
@@ -430,6 +559,9 @@ const artworkFilterBtns = document.querySelectorAll('.filter-chip');
 const gridCommercial = document.getElementById('grid-commercial');
 const gridCinematic = document.getElementById('grid-cinematic');
 const gridArtwork = document.getElementById('grid-artwork');
+const gridLiveaction = document.getElementById('grid-liveaction');
+const gridPhotography = document.getElementById('grid-photography');
+const gridDashboard = document.getElementById('grid-dashboard');
 
 const modalBackdrop = document.getElementById('modalBackdrop');
 const projectModal = document.getElementById('projectModal');
@@ -441,6 +573,7 @@ function init() {
   initNavigation();
   initArtworkFilters();
   renderAllViews();
+  initFilmStrips();
 }
 
 // ── Navigation Logic ──
@@ -506,6 +639,18 @@ function renderAllViews() {
   // Artwork
   renderArtworkView();
 
+  // Live Action
+  const liveactionProjects = projects.filter(p => p.category === 'liveaction');
+  gridLiveaction.innerHTML = liveactionProjects.map((p, i) => createProjectCard(p, i)).join('');
+
+  // Photography
+  const photographyProjects = projects.filter(p => p.category === 'photography');
+  gridPhotography.innerHTML = photographyProjects.map((p, i) => createProjectCard(p, i)).join('');
+
+  // Dashboard
+  const dashboardProjects = projects.filter(p => p.category === 'dashboard');
+  gridDashboard.innerHTML = dashboardProjects.map((p, i) => createProjectCard(p, i)).join('');
+
   attachCardEvents();
 }
 
@@ -522,6 +667,8 @@ function createProjectCard(project, index) {
   const isVertical = project.orientation === 'vertical';
   const verticalClass = isVertical ? ' vertical' : '';
   const isVideo = project.type === 'video';
+  const isPhotography = project.category === 'photography';
+  const photographyClass = isPhotography ? ' photography-card' : '';
 
   let thumbnailBg = '';
   if (!project.thumbnail) {
@@ -538,8 +685,11 @@ function createProjectCard(project, index) {
     </div>
   `;
 
+  const frameNum = String(index + 1).padStart(3, '0');
+
   let cardHTML = `
-    <div class="project-card${verticalClass}" data-id="${project.id}" style="animation-delay: ${index * 0.05}s">
+    <div class="project-card${verticalClass}${photographyClass}" data-id="${project.id}" style="animation-delay: ${index * 0.05}s">
+      <span class="frame-number">F-${frameNum}</span>
       <div class="card-thumbnail" style="${thumbnailBg}">
         <img src="${project.thumbnail || ''}" alt="${project.title}">
         <div class="card-overlay">${overlayContent}</div>
@@ -554,7 +704,7 @@ function createProjectCard(project, index) {
         <p class="card-desc">${project.desc}</p>
       </div>
     `;
-  } else {
+  } else if (!isPhotography) {
      cardHTML += `
       <div class="card-info" style="padding: 12px 20px; border-top: none;">
         <div class="card-category" style="margin: 0;">IMG.${project.category.toUpperCase()}</div>
@@ -645,7 +795,7 @@ function openModal(projectId) {
 
     ${scenesHTML}
 
-    ${project.type !== 'image' ? `
+    ${(project.type !== 'image' || project.category === 'dashboard') ? `
     <div class="modal-section">
       <h3 class="modal-section-title">PROJECT_BRIEF</h3>
       <p>${project.brief}</p>
@@ -693,3 +843,75 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ═══════════════════════════════════════
+//  FILM STRIP BEHAVIOR  (ver3)
+// ═══════════════════════════════════════
+
+function initFilmStrips() {
+  const filmScrolls = document.querySelectorAll('.film-strip-scroll');
+
+  filmScrolls.forEach(scrollEl => {
+    const section = scrollEl.closest('.view-section');
+    const sectionId = section.id.replace('view-', '');
+    const progressFill = document.getElementById('fprog-' + sectionId);
+
+    // ── Wheel → horizontal scroll ──
+    scrollEl.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      scrollEl.scrollLeft += e.deltaY * 1.8;
+      updateFilmProgress(scrollEl, progressFill);
+    }, { passive: false });
+
+    // ── Drag to scroll ──
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+
+    scrollEl.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX - scrollEl.offsetLeft;
+      scrollStart = scrollEl.scrollLeft;
+      scrollEl.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const x = e.pageX - scrollEl.offsetLeft;
+      const delta = (x - startX) * 1.6;
+      scrollEl.scrollLeft = scrollStart - delta;
+      updateFilmProgress(scrollEl, progressFill);
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      scrollEl.classList.remove('is-dragging');
+    });
+
+    // Touch support
+    let touchStartX = 0;
+    let touchScrollStart = 0;
+
+    scrollEl.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].pageX;
+      touchScrollStart = scrollEl.scrollLeft;
+    }, { passive: true });
+
+    scrollEl.addEventListener('touchmove', (e) => {
+      const delta = touchStartX - e.touches[0].pageX;
+      scrollEl.scrollLeft = touchScrollStart + delta;
+      updateFilmProgress(scrollEl, progressFill);
+    }, { passive: true });
+
+    // Track scroll for progress
+    scrollEl.addEventListener('scroll', () => updateFilmProgress(scrollEl, progressFill));
+  });
+}
+
+function updateFilmProgress(scrollEl, progressEl) {
+  if (!progressEl) return;
+  const max = scrollEl.scrollWidth - scrollEl.clientWidth;
+  const pct = max > 0 ? (scrollEl.scrollLeft / max) * 100 : 0;
+  progressEl.style.width = pct + '%';
+}

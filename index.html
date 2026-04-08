@@ -42,6 +42,18 @@
               <span class="nav-icon">[◈]</span>
               <span class="nav-text">ARTWORK</span>
            </button>
+           <button class="nav-btn" data-view="liveaction">
+              <span class="nav-icon">[🎥]</span>
+              <span class="nav-text">LIVE-ACTION</span>
+           </button>
+           <button class="nav-btn" data-view="photography">
+              <span class="nav-icon">[📸]</span>
+              <span class="nav-text">PHOTOGRAPHY</span>
+           </button>
+           <button class="nav-btn" data-view="dashboard">
+              <span class="nav-icon">[📊]</span>
+              <span class="nav-text">DASHBOARD</span>
+           </button>
        </nav>
 
        <div class="sidebar-footer">
@@ -163,29 +175,41 @@
        </section>
 
        <!-- V2: COMMERCIAL -->
-       <section class="view-section" id="view-commercial">
+       <section class="view-section film-section" id="view-commercial">
           <div class="view-header">
              <h2>COMM.DB // <span class="accent-text">COMMERCIAL</span></h2>
              <p class="view-desc">제품 홍보, 커머스 콘텐츠, 브랜드 대상 광고 영상 에셋</p>
+             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
           </div>
-          <div class="view-content">
-             <div class="works-grid" id="grid-commercial"></div>
+          <div class="film-strip-outer">
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-strip-scroll">
+                <div class="works-grid" id="grid-commercial"></div>
+             </div>
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-commercial"></div></div>
           </div>
        </section>
 
        <!-- V3: CINEMATIC -->
-       <section class="view-section" id="view-cinematic">
+       <section class="view-section film-section" id="view-cinematic">
           <div class="view-header">
              <h2>CINE.DB // <span class="accent-text">CINEMATICS</span></h2>
              <p class="view-desc">단편 영화, 단편 애니메이션, 스토리보드 기반 기획 영상</p>
+             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
           </div>
-          <div class="view-content">
-             <div class="works-grid" id="grid-cinematic"></div>
+          <div class="film-strip-outer">
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-strip-scroll">
+                <div class="works-grid" id="grid-cinematic"></div>
+             </div>
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-cinematic"></div></div>
           </div>
        </section>
 
        <!-- V4: ARTWORK -->
-       <section class="view-section" id="view-artwork">
+       <section class="view-section film-section" id="view-artwork">
           <div class="view-header">
              <h2>IMG.DB // <span class="accent-text">ARTWORK</span></h2>
              <p class="view-desc">캐릭터 일관성 도출, 컨셉 아트 도출, 패키지 정밀 오버레이 테스트</p>
@@ -196,9 +220,66 @@
                 <button class="filter-chip" data-sub="portrait">[PORTRAIT]</button>
                 <button class="filter-chip" data-sub="product-image">[PRODUCT]</button>
              </div>
+             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
           </div>
-          <div class="view-content">
-             <div class="works-grid" id="grid-artwork"></div>
+          <div class="film-strip-outer">
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-strip-scroll" id="scroll-artwork">
+                <div class="works-grid" id="grid-artwork"></div>
+             </div>
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-artwork"></div></div>
+          </div>
+       </section>
+
+       <!-- V5: LIVE-ACTION -->
+       <section class="view-section film-section" id="view-liveaction">
+          <div class="view-header">
+             <h2>REAL.DB // <span class="accent-text">LIVE-ACTION</span></h2>
+             <p class="view-desc">실사 기반의 감성 숏폼 및 제품 커머셜 영상, 인터뷰</p>
+             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
+          </div>
+          <div class="film-strip-outer">
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-strip-scroll">
+                <div class="works-grid" id="grid-liveaction"></div>
+             </div>
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-liveaction"></div></div>
+          </div>
+       </section>
+
+       <!-- V6: PHOTOGRAPHY -->
+       <section class="view-section film-section" id="view-photography">
+          <div class="view-header">
+             <h2>PHOTO.DB // <span class="accent-text">PHOTOGRAPHY</span></h2>
+             <p class="view-desc">SONY A7M4 카메라 및 라이트룸 리터칭 기반 실사 사진 촬영 작업물</p>
+             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
+          </div>
+          <div class="film-strip-outer">
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-strip-scroll">
+                <div class="works-grid" id="grid-photography"></div>
+             </div>
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-photography"></div></div>
+          </div>
+       </section>
+
+       <!-- V7: DASHBOARD -->
+       <section class="view-section film-section" id="view-dashboard">
+          <div class="view-header">
+             <h2>APP.DB // <span class="accent-text">DASHBOARD</span></h2>
+             <p class="view-desc">유튜브 성과지표 분석 데이터를 시각화한 커스텀 웹 애플리케이션</p>
+             <p class="film-hint">[ ← 드래그 또는 스크롤로 탐색 → ]</p>
+          </div>
+          <div class="film-strip-outer">
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-strip-scroll">
+                <div class="works-grid" id="grid-dashboard"></div>
+             </div>
+             <div class="sprocket-rail" aria-hidden="true"></div>
+             <div class="film-progress-bar"><div class="film-progress-fill" id="fprog-dashboard"></div></div>
           </div>
        </section>
     </main>
