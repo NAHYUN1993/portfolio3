@@ -270,7 +270,12 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
       useCORS: true, 
       backgroundColor: '#0c1628', 
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight
+      windowHeight: window.innerHeight,
+      ignoreElements: function(el) {
+        if(el.id === 'downloadPdfBtn' || el.id === 'big-hint') return true;
+        if(el.classList && el.classList.contains('grain')) return true;
+        return false;
+      }
     },
     jsPDF:        { 
       unit: 'px', 
