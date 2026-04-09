@@ -135,7 +135,9 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 <div id="indicators"></div>
 <div id="big-hint">🖱️ 다른 카테고리를 보려면 <b>마우스 휠</b>을 돌리세요! <br><span style="font-size: 13px; font-weight: 400; color: #aab8e0; margin-top: 6px; display: inline-block;">(카드를 클릭하면 상세 프로젝트가 열립니다)</span></div>
 <div id="detail"><div class="d-inner" id="dI"></div></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script src="https://nahyun1993.github.io/portfolio3/script.js" onerror="console.log('External script not needed - using inline data')"></script>
 <script>
 const B='https://nahyun1993.github.io/portfolio3/';
@@ -254,59 +256,56 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
   const hint = document.getElementById('big-hint');
   const starsCanvas = document.getElementById('stars');
   const grainEl = document.querySelector('.grain');
-  const topnav = document.getElementById('topnav');
 
-  // Hide elements that cause canvas rendering issues
-  const originalHintVis = hint ? hint.style.visibility : '';
-  const originalStarsDisplay = starsCanvas ? starsCanvas.style.display : '';
-  const originalGrainDisplay = grainEl ? grainEl.style.display : '';
-  const originalNavDisplay = topnav ? topnav.style.display : '';
+  const savedHint = hint ? hint.style.visibility : '';
+  const savedStars = starsCanvas ? starsCanvas.style.display : '';
+  const savedGrain = grainEl ? grainEl.style.display : '';
 
   if(hint) hint.style.visibility = 'hidden';
   if(starsCanvas) starsCanvas.style.display = 'none';
   if(grainEl) grainEl.style.display = 'none';
-  if(topnav) topnav.style.display = 'none';
-
-  const w = window.innerWidth;
-  const h = window.innerHeight;
 
   function restoreAll() {
     btn.textContent = '📄 PDF DOWNLOAD';
     btn.disabled = false;
-    if(hint) hint.style.visibility = originalHintVis;
-    if(starsCanvas) starsCanvas.style.display = originalStarsDisplay;
-    if(grainEl) grainEl.style.display = originalGrainDisplay;
-    if(topnav) topnav.style.display = originalNavDisplay;
+    if(hint) hint.style.visibility = savedHint;
+    if(starsCanvas) starsCanvas.style.display = savedStars;
+    if(grainEl) grainEl.style.display = savedGrain;
   }
 
-  const opt = {
-    margin:       0,
-    filename:     'LEENAHYUN_Portfolio_Screen.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { 
-      scale: 2, 
-      useCORS: true, 
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  setTimeout(function() {
+    html2canvas(document.body, {
+      scale: 2,
+      useCORS: true,
       allowTaint: true,
       backgroundColor: '#0c1628',
       scrollX: 0,
       scrollY: 0,
+      width: w,
+      height: h,
       windowWidth: w,
       windowHeight: h
-    },
-    jsPDF: { 
-      unit: 'px', 
-      format: [w, h], 
-      orientation: w > h ? 'landscape' : 'portrait',
-      putOnlyUsedFonts: true
-    }
-  };
-
-  // Short delay so the DOM updates are applied before capture
-  setTimeout(() => {
-    html2pdf().set(opt).from(document.documentElement).save()
-      .then(() => { restoreAll(); })
-      .catch(err => { console.error('PDF Error:', err); restoreAll(); });
-  }, 300);
+    }).then(function(canvas) {
+      var imgData = canvas.toDataURL('image/jpeg', 0.98);
+      var { jsPDF } = window.jspdf;
+      var pdf = new jsPDF({
+        orientation: w > h ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [w, h],
+        putOnlyUsedFonts: true
+      });
+      pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
+      pdf.save('LEENAHYUN_Portfolio_Screen.pdf');
+      restoreAll();
+    }).catch(function(err) {
+      console.error('PDF Error:', err);
+      alert('PDF 생성 중 오류가 발생했습니다: ' + err.message);
+      restoreAll();
+    });
+  }, 400);
 });
 </script>
 </body>
