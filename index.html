@@ -250,21 +250,21 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
 
 document.getElementById('downloadPdfBtn').addEventListener('click', function() {
   var btn = this;
-  btn.textContent = '⏳ 생성 중...';
+  btn.textContent = '⏳ 준비 중...';
   btn.disabled = true;
 
-  // Physically remove problematic animated elements from DOM before capture
+  // Remove problematic animated elements from DOM
   var starsCanvas = document.getElementById('stars');
   var grainEl = document.querySelector('.grain');
   var nebulaEl = document.querySelector('.nebula-bg');
   var hint = document.getElementById('big-hint');
 
   var starsParent = starsCanvas ? starsCanvas.parentNode : null;
-  var starsNext   = starsCanvas ? starsCanvas.nextSibling : null;
+  var starsNext = starsCanvas ? starsCanvas.nextSibling : null;
   var grainParent = grainEl ? grainEl.parentNode : null;
-  var grainNext   = grainEl ? grainEl.nextSibling : null;
+  var grainNext = grainEl ? grainEl.nextSibling : null;
   var nebulaParent = nebulaEl ? nebulaEl.parentNode : null;
-  var nebulaNext   = nebulaEl ? nebulaEl.nextSibling : null;
+  var nebulaNext = nebulaEl ? nebulaEl.nextSibling : null;
 
   if(starsCanvas) starsCanvas.remove();
   if(grainEl) grainEl.remove();
@@ -282,40 +282,70 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
 
   var w = window.innerWidth;
   var h = window.innerHeight;
+  var totalCats = cats.length; // 7 categories
+  var capturedImages = [];
+  var currentIdx = 0;
 
-  setTimeout(function() {
-    console.log('[PDF] Capturing screen...');
-    html2canvas(document.body, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#0c1628',
-      scrollX: 0,
-      scrollY: 0,
-      width: w,
-      height: h,
-      windowWidth: w,
-      windowHeight: h,
-      logging: false
-    }).then(function(canvas) {
-      console.log('[PDF] Done! Saving...');
-      var imgData = canvas.toDataURL('image/jpeg', 0.95);
-      var jsPDF = window.jspdf.jsPDF;
-      var pdf = new jsPDF({
-        orientation: w > h ? 'landscape' : 'portrait',
-        unit: 'px',
-        format: [w, h],
-        putOnlyUsedFonts: true
+  function captureNext() {
+    if(currentIdx >= totalCats) {
+      // All pages captured — build multi-page PDF
+      btn.textContent = '📄 PDF 저장 중...';
+      try {
+        var jsPDF = window.jspdf.jsPDF;
+        var orientation = w > h ? 'landscape' : 'portrait';
+        var pdf = new jsPDF({
+          orientation: orientation,
+          unit: 'px',
+          format: [w, h],
+          putOnlyUsedFonts: true
+        });
+        capturedImages.forEach(function(imgData, i) {
+          if(i > 0) pdf.addPage([w, h], orientation);
+          pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
+        });
+        pdf.save('LEENAHYUN_Portfolio.pdf');
+      } catch(e) {
+        alert('PDF 저장 오류: ' + e.message);
+      }
+      // Restore focused to overview
+      focusedIdx = 0;
+      restoreAll();
+      return;
+    }
+
+    // Navigate to this category
+    focusedIdx = currentIdx;
+    btn.textContent = '⏳ 캡처 중 (' + (currentIdx + 1) + '/' + totalCats + ')';
+
+    // Wait for 3D carousel animation to settle (curF catches up at 7% per frame ~60fps → ~1.5s)
+    setTimeout(function() {
+      html2canvas(document.body, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#0c1628',
+        scrollX: 0,
+        scrollY: 0,
+        width: w,
+        height: h,
+        windowWidth: w,
+        windowHeight: h,
+        logging: false
+      }).then(function(canvas) {
+        capturedImages.push(canvas.toDataURL('image/jpeg', 0.92));
+        currentIdx++;
+        captureNext(); // capture next category
+      }).catch(function(err) {
+        console.error('[PDF] Capture error at index ' + currentIdx + ':', err);
+        alert('캡처 오류: ' + err.message);
+        focusedIdx = 0;
+        restoreAll();
       });
-      pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
-      pdf.save('LEENAHYUN_Portfolio_Screen.pdf');
-      restoreAll();
-    }).catch(function(err) {
-      console.error('[PDF] Error:', err);
-      alert('PDF 오류: ' + err.message);
-      restoreAll();
-    });
-  }, 500);
+    }, 1800); // 1.8s for animation to settle
+  }
+
+  // Start capturing after a small delay to let DOM update
+  setTimeout(captureNext, 300);
 });
 </script>
 </body>
