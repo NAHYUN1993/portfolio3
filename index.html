@@ -253,7 +253,7 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
   btn.textContent = '⏳ 준비 중...';
   btn.disabled = true;
 
-  // Remove problematic animated elements from DOM
+  // Remove animated BG elements that break html2canvas
   var starsCanvas = document.getElementById('stars');
   var grainEl = document.querySelector('.grain');
   var nebulaEl = document.querySelector('.nebula-bg');
@@ -278,74 +278,110 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
     if(starsCanvas && starsParent) starsParent.insertBefore(starsCanvas, starsNext);
     if(grainEl && grainParent) grainParent.insertBefore(grainEl, grainNext);
     if(nebulaEl && nebulaParent) nebulaParent.insertBefore(nebulaEl, nebulaNext);
+    closeDetail();
   }
 
   var w = window.innerWidth;
   var h = window.innerHeight;
-  var totalCats = cats.length; // 7 categories
   var capturedImages = [];
+  var capturedHeights = [];
+
+  // Filter to meaningful projects (with content: brief, workflow, or scenes)
+  var projectsToCapture = P.filter(function(p) {
+    return p.br || (p.sc && p.sc.length > 0) || (p.imgs && p.imgs.length > 0) || p.d;
+  });
+
   var currentIdx = 0;
 
   function captureNext() {
-    if(currentIdx >= totalCats) {
-      // All pages captured — build multi-page PDF
+    if(currentIdx >= projectsToCapture.length) {
       btn.textContent = '📄 PDF 저장 중...';
-      try {
-        var jsPDF = window.jspdf.jsPDF;
-        var orientation = w > h ? 'landscape' : 'portrait';
-        var pdf = new jsPDF({
-          orientation: orientation,
-          unit: 'px',
-          format: [w, h],
-          putOnlyUsedFonts: true
-        });
-        capturedImages.forEach(function(imgData, i) {
-          if(i > 0) pdf.addPage([w, h], orientation);
-          pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
-        });
-        pdf.save('LEENAHYUN_Portfolio.pdf');
-      } catch(e) {
-        alert('PDF 저장 오류: ' + e.message);
-      }
-      // Restore focused to overview
-      focusedIdx = 0;
-      restoreAll();
+      buildAndSavePDF();
       return;
     }
 
-    // Navigate to this category
-    focusedIdx = currentIdx;
-    btn.textContent = '⏳ 캡처 중 (' + (currentIdx + 1) + '/' + totalCats + ')';
+    var p = projectsToCapture[currentIdx];
+    btn.textContent = '⏳ (' + (currentIdx + 1) + '/' + projectsToCapture.length + ') ' + (p.t ? p.t.substring(0, 20) : '');
 
-    // Wait for 3D carousel animation to settle (curF catches up at 7% per frame ~60fps → ~1.5s)
+    // Open the detail panel for this project
+    openDetail(p.id);
+
+    // Wait for detail panel animation to finish
     setTimeout(function() {
-      html2canvas(document.body, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#0c1628',
-        scrollX: 0,
-        scrollY: 0,
-        width: w,
-        height: h,
-        windowWidth: w,
-        windowHeight: h,
-        logging: false
-      }).then(function(canvas) {
-        capturedImages.push(canvas.toDataURL('image/jpeg', 0.92));
-        currentIdx++;
-        captureNext(); // capture next category
-      }).catch(function(err) {
-        console.error('[PDF] Capture error at index ' + currentIdx + ':', err);
-        alert('캡처 오류: ' + err.message);
-        focusedIdx = 0;
-        restoreAll();
-      });
-    }, 1800); // 1.8s for animation to settle
+      var detailEl = document.getElementById('detail');
+      var dInner = document.getElementById('dI');
+      if(!detailEl || !dInner) { currentIdx++; captureNext(); return; }
+
+      // Temporarily expand detail to full scroll height for full-page capture
+      var origOverflow = detailEl.style.overflow;
+      var origHeight = detailEl.style.height;
+      var fullH = Math.max(dInner.scrollHeight + 60, h);
+
+      detailEl.style.overflow = 'visible';
+      detailEl.style.height = fullH + 'px';
+
+      setTimeout(function() {
+        html2canvas(detailEl, {
+          scale: 1.5,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#0d1b3e',
+          scrollX: 0,
+          scrollY: 0,
+          width: w,
+          height: fullH,
+          windowWidth: w,
+          windowHeight: fullH,
+          logging: false
+        }).then(function(canvas) {
+          // Restore detail element
+          detailEl.style.overflow = origOverflow;
+          detailEl.style.height = origHeight;
+
+          capturedImages.push(canvas.toDataURL('image/jpeg', 0.90));
+          capturedHeights.push({ w: canvas.width / 1.5, h: canvas.height / 1.5 });
+          currentIdx++;
+          captureNext();
+        }).catch(function(err) {
+          console.error('[PDF] Error on project ' + p.id + ':', err);
+          detailEl.style.overflow = origOverflow;
+          detailEl.style.height = origHeight;
+          currentIdx++;
+          captureNext();
+        });
+      }, 200);
+    }, 700);
   }
 
-  // Start capturing after a small delay to let DOM update
-  setTimeout(captureNext, 300);
+  function buildAndSavePDF() {
+    try {
+      var jsPDF = window.jspdf.jsPDF;
+      // First page dimensions
+      var firstW = capturedHeights[0] ? capturedHeights[0].w : w;
+      var firstH = capturedHeights[0] ? capturedHeights[0].h : h;
+      var pdf = new jsPDF({
+        orientation: firstW > firstH ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [firstW, firstH],
+        putOnlyUsedFonts: true
+      });
+
+      capturedImages.forEach(function(imgData, i) {
+        var pw = capturedHeights[i] ? capturedHeights[i].w : w;
+        var ph = capturedHeights[i] ? capturedHeights[i].h : h;
+        if(i > 0) pdf.addPage([pw, ph], pw > ph ? 'landscape' : 'portrait');
+        pdf.addImage(imgData, 'JPEG', 0, 0, pw, ph);
+      });
+
+      pdf.save('LEENAHYUN_Portfolio_Projects.pdf');
+    } catch(e) {
+      alert('PDF 저장 오류: ' + e.message);
+    }
+    restoreAll();
+  }
+
+  // Begin after short delay for DOM updates
+  setTimeout(captureNext, 400);
 });
 </script>
 </body>
