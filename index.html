@@ -122,12 +122,20 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 <body>
 <div class="nebula-bg"><div class="nebula-blob b1"></div><div class="nebula-blob b2"></div><div class="nebula-blob b3"></div><div class="nebula-blob b4"></div><div class="nebula-blob b5"></div></div>
 <canvas id="stars"></canvas><div class="grain"></div>
-<nav id="topnav"><span class="logo">LEE NAHYUN</span><span style="opacity:.5">AI CREATOR & VISUAL DIRECTOR</span><span class="status">● AVAILABLE FOR WORK</span></nav>
+<nav id="topnav">
+  <span class="logo">LEE NAHYUN</span>
+  <span style="opacity:.5">AI CREATOR & VISUAL DIRECTOR</span>
+  <div style="display:flex; gap: 16px; align-items:center;">
+    <span class="status">● AVAILABLE FOR WORK</span>
+    <button id="downloadPdfBtn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.1em; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">📄 PDF DOWNLOAD</button>
+  </div>
+</nav>
 <div id="center-title"><h1>LEE<br><span class="accent">NAHYUN</span></h1><div class="sub">AI Creator · Visual Director · System-Based Workflow</div></div>
 <div id="scene-wrap"><div id="scene"></div></div>
 <div id="indicators"></div>
 <div id="big-hint">🖱️ 다른 카테고리를 보려면 <b>마우스 휠</b>을 돌리세요! <br><span style="font-size: 13px; font-weight: 400; color: #aab8e0; margin-top: 6px; display: inline-block;">(카드를 클릭하면 상세 프로젝트가 열립니다)</span></div>
 <div id="detail"><div class="d-inner" id="dI"></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://nahyun1993.github.io/portfolio3/script.js" onerror="console.log('External script not needed - using inline data')"></script>
 <script>
 const B='https://nahyun1993.github.io/portfolio3/';
@@ -237,6 +245,54 @@ function openProj(id){
 function openImg(src){dI.innerHTML=`<div class="d-back" onclick="openDetail('artwork')">← BACK</div><img src="${src}" style="width:100%;max-width:600px;border-radius:12px;display:block;margin:20px auto">`;detail.scrollTop=0}
 function closeDetail(){detailOpen=false;detail.classList.remove('active')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
+
+document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+  const element = document.body;
+  const originalWidth = element.style.width;
+  const originalHeight = element.style.height;
+  
+  const btn = this;
+  const hint = document.getElementById('big-hint');
+  
+  btn.style.display = 'none';
+  if(hint) hint.style.visibility = 'hidden';
+
+  // Fix dimensions to current screen to avoid layout shift
+  element.style.width = window.innerWidth + 'px';
+  element.style.height = window.innerHeight + 'px';
+
+  const opt = {
+    margin:       0,
+    filename:     'LEENAHYUN_Portfolio_Screen.pdf',
+    image:        { type: 'jpeg', quality: 1.0 },
+    html2canvas:  { 
+      scale: 2, 
+      useCORS: true, 
+      backgroundColor: '#0c1628', 
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight
+    },
+    jsPDF:        { 
+      unit: 'px', 
+      format: [window.innerWidth, window.innerHeight], 
+      orientation: window.innerWidth > window.innerHeight ? 'landscape' : 'portrait',
+      putOnlyUsedFonts:true
+    }
+  };
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    btn.style.display = 'block';
+    if(hint) hint.style.visibility = 'visible';
+    element.style.width = originalWidth;
+    element.style.height = originalHeight;
+  }).catch(err => {
+    console.error('PDF Error:', err);
+    btn.style.display = 'block';
+    if(hint) hint.style.visibility = 'visible';
+    element.style.width = originalWidth;
+    element.style.height = originalHeight;
+  });
+});
 </script>
 </body>
 </html>
