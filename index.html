@@ -4,107 +4,155 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LEE NAHYUN — AI CREATOR</title>
-  <meta name="description" content="AI 아티스트 포트폴리오 — AI 영상 및 이미지 기획/제작">
+  <meta name="description" content="AI 아티스트 포트폴리오 — AI 영상 및 이미지 기획/제작 · Nebula Portfolio">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Atmospheric grain overlay -->
-  <div class="grain" aria-hidden="true"></div>
+  <!-- Star particle canvas -->
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
 
-  <!-- Minimal header -->
-  <header class="site-header">
-    <div class="header-brand">
-      <button class="brand-btn" data-view="overview">NAHYUN</button>
-    </div>
-    <nav class="site-nav" id="siteNav">
-      <button class="nav-item active" data-view="overview">OVERVIEW</button>
-      <button class="nav-item" data-view="commercial">COMMERCIAL</button>
-      <button class="nav-item" data-view="cinematic">CINEMATICS</button>
-      <button class="nav-item" data-view="artwork">ARTWORK</button>
-      <button class="nav-item" data-view="liveaction">LIVE-ACTION</button>
-      <button class="nav-item" data-view="photography">PHOTOGRAPHY</button>
-      <button class="nav-item" data-view="dashboard">DASHBOARD</button>
-    </nav>
-    <div class="header-right">
-      <span class="availability-dot"></span>
-      <span class="availability-text">AVAILABLE</span>
-    </div>
-  </header>
+  <!-- Nebula background layers -->
+  <div class="nebula-bg" aria-hidden="true">
+    <div class="nebula-blob blob-1"></div>
+    <div class="nebula-blob blob-2"></div>
+    <div class="nebula-blob blob-3"></div>
+    <div class="nebula-blob blob-4"></div>
+    <div class="nebula-blob blob-5"></div>
+  </div>
+
+  <!-- Floating decorative shapes -->
+  <div class="floating-decor" id="floatingDecor" aria-hidden="true"></div>
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
 
   <!-- Main stage -->
   <main class="stage" id="stage">
 
-    <!-- OVERVIEW -->
+    <!-- OVERVIEW (Landing) -->
     <section class="view active" id="view-overview">
-      <div class="overview-wrap">
-        <div class="overview-hero">
-          <p class="overview-index">001</p>
-          <h1 class="hero-title">
-            <span>LEE</span>
-            <em>NAHYUN</em>
-          </h1>
-          <p class="hero-role">AI Creator &amp; Visual Director</p>
+      <div class="overview-nebula">
+
+        <!-- Orbital Navigation Ring -->
+        <div class="orbit-container" id="orbitContainer">
+          <div class="orbit-ring"></div>
+          <div class="orbit-ring orbit-ring-2"></div>
+
+          <!-- Orbital Menu Items -->
+          <button class="orbit-item active" data-view="overview" style="--angle: 0deg;">
+            <span class="orbit-icon">✦</span>
+            <span class="orbit-label">OVERVIEW</span>
+          </button>
+          <button class="orbit-item" data-view="commercial" style="--angle: 51.4deg;">
+            <span class="orbit-icon">◈</span>
+            <span class="orbit-label">COMMERCIAL</span>
+          </button>
+          <button class="orbit-item" data-view="cinematic" style="--angle: 102.8deg;">
+            <span class="orbit-icon">◇</span>
+            <span class="orbit-label">CINEMATICS</span>
+          </button>
+          <button class="orbit-item" data-view="artwork" style="--angle: 154.3deg;">
+            <span class="orbit-icon">⬡</span>
+            <span class="orbit-label">ARTWORK</span>
+          </button>
+          <button class="orbit-item" data-view="liveaction" style="--angle: 205.7deg;">
+            <span class="orbit-icon">▽</span>
+            <span class="orbit-label">LIVE-ACTION</span>
+          </button>
+          <button class="orbit-item" data-view="photography" style="--angle: 257.1deg;">
+            <span class="orbit-icon">◎</span>
+            <span class="orbit-label">PHOTOGRAPHY</span>
+          </button>
+          <button class="orbit-item" data-view="dashboard" style="--angle: 308.6deg;">
+            <span class="orbit-icon">⬢</span>
+            <span class="orbit-label">DASHBOARD</span>
+          </button>
+
+          <!-- Center Content -->
+          <div class="center-content">
+            <p class="center-subtitle">AI Creator &amp; Visual Director</p>
+            <h1 class="center-name">
+              <span class="name-line">LEE</span>
+              <span class="name-line name-accent">NAHYUN</span>
+            </h1>
+            <div class="center-bio">
+              <p>방송 현장 조연출과 인하우스 영상 PD 출신의 실전 경험을 바탕으로, AI 모델을 결합한 하이브리드 자동화 크리에이티브 워크플로를 설계합니다.</p>
+              <p>상업적 완성도를 최우선으로 하며, 생성형 AI 결과물의 고질적 문제를 기술적 아키텍처 및 프롬프트 제어를 통해 해결하는 시스템 기반 크리에이터입니다.</p>
+            </div>
+
+            <!-- Tool Categories -->
+            <div class="tool-categories">
+              <div class="tool-cat">
+                <span class="tool-cat-label">🎬 AI Generation</span>
+                <div class="tool-tags">
+                  <span>ComfyUI</span><span>Kling</span><span>Veo</span><span>Midjourney</span><span>Nano Banana</span>
+                </div>
+              </div>
+              <div class="tool-cat">
+                <span class="tool-cat-label">🎨 Post Production</span>
+                <div class="tool-tags">
+                  <span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span><span>Lightroom</span>
+                </div>
+              </div>
+              <div class="tool-cat">
+                <span class="tool-cat-label">📷 Production Gear</span>
+                <div class="tool-tags">
+                  <span>Sony A7M4</span><span>난라이트 FC 120B</span>
+                </div>
+              </div>
+              <div class="tool-cat">
+                <span class="tool-cat-label">🤖 AI &amp; Productivity</span>
+                <div class="tool-tags">
+                  <span>안티그래비티</span><span>클로드</span><span>노트북 LM</span><span>옵시디언</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="center-status">
+              <span class="status-dot"></span>
+              <span>AVAILABLE FOR WORK</span>
+            </div>
+          </div>
         </div>
 
-        <div class="overview-body">
-          <div class="overview-bio">
-            <p>방송 현장 조연출과 인하우스 영상 PD 출신의 실전 경험을 바탕으로, AI 모델을 결합한 하이브리드 자동화 크리에이티브 워크플로를 설계합니다.</p>
-            <p>상업적 완성도를 최우선으로 하며, 생성형 AI 결과물의 고질적 문제를 기술적 아키텍처 및 프롬프트 제어를 통해 해결하는 시스템 기반 크리에이터입니다.</p>
-          </div>
-
-          <div class="overview-skills">
-            <div class="skill-row">
-              <span class="skill-name">Video Generation</span>
-              <div class="skill-bar"><div class="skill-fill" style="--w:95%"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Image Pipeline</span>
-              <div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Prompt Engineering</span>
-              <div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Post Production</span>
-              <div class="skill-bar"><div class="skill-fill" style="--w:98%"></div></div>
-            </div>
-          </div>
-
-          <div class="overview-tools">
-            <span>ComfyUI</span><span>Kling</span><span>Veo</span><span>Midjourney</span>
-            <span>Nano Banana</span><span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span>
-          </div>
-        </div>
       </div>
     </section>
 
     <!-- COMMERCIAL -->
     <section class="view" id="view-commercial">
-      <div class="view-label">
-        <span class="label-index">002</span>
-        <span class="label-title">Commercial</span>
+      <div class="section-header">
+        <button class="back-to-orbit" data-view="overview">← BACK TO ORBIT</button>
+        <div class="view-label">
+          <span class="label-index">002</span>
+          <span class="label-title">Commercial</span>
+        </div>
       </div>
       <div class="float-stage" id="grid-commercial"></div>
     </section>
 
     <!-- CINEMATIC -->
     <section class="view" id="view-cinematic">
-      <div class="view-label">
-        <span class="label-index">003</span>
-        <span class="label-title">Cinematics</span>
+      <div class="section-header">
+        <button class="back-to-orbit" data-view="overview">← BACK TO ORBIT</button>
+        <div class="view-label">
+          <span class="label-index">003</span>
+          <span class="label-title">Cinematics</span>
+        </div>
       </div>
       <div class="float-stage" id="grid-cinematic"></div>
     </section>
 
     <!-- ARTWORK -->
     <section class="view" id="view-artwork">
-      <div class="view-label">
-        <span class="label-index">004</span>
-        <span class="label-title">Artwork</span>
+      <div class="section-header">
+        <button class="back-to-orbit" data-view="overview">← BACK TO ORBIT</button>
+        <div class="view-label">
+          <span class="label-index">004</span>
+          <span class="label-title">Artwork</span>
+        </div>
       </div>
       <div class="artwork-filters" id="artworkFilters">
         <button class="filter-pill active" data-sub="all-image">All</button>
@@ -118,27 +166,36 @@
 
     <!-- LIVE-ACTION -->
     <section class="view" id="view-liveaction">
-      <div class="view-label">
-        <span class="label-index">005</span>
-        <span class="label-title">Live-Action</span>
+      <div class="section-header">
+        <button class="back-to-orbit" data-view="overview">← BACK TO ORBIT</button>
+        <div class="view-label">
+          <span class="label-index">005</span>
+          <span class="label-title">Live-Action</span>
+        </div>
       </div>
       <div class="float-stage" id="grid-liveaction"></div>
     </section>
 
     <!-- PHOTOGRAPHY -->
     <section class="view" id="view-photography">
-      <div class="view-label">
-        <span class="label-index">006</span>
-        <span class="label-title">Photography</span>
+      <div class="section-header">
+        <button class="back-to-orbit" data-view="overview">← BACK TO ORBIT</button>
+        <div class="view-label">
+          <span class="label-index">006</span>
+          <span class="label-title">Photography</span>
+        </div>
       </div>
       <div class="float-stage" id="grid-photography"></div>
     </section>
 
     <!-- DASHBOARD -->
     <section class="view" id="view-dashboard">
-      <div class="view-label">
-        <span class="label-index">007</span>
-        <span class="label-title">Dashboard</span>
+      <div class="section-header">
+        <button class="back-to-orbit" data-view="overview">← BACK TO ORBIT</button>
+        <div class="view-label">
+          <span class="label-index">007</span>
+          <span class="label-title">Dashboard</span>
+        </div>
       </div>
       <div class="float-stage" id="grid-dashboard"></div>
     </section>
@@ -153,7 +210,7 @@
     <div class="modal-decoration bottom-left"></div>
     <div class="modal-decoration bottom-right"></div>
     <div class="modal-close">
-      <button class="modal-close-btn" id="modalCloseBtn" aria-label="닫기">[ CLOSE ]</button>
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="닫기">✕ CLOSE</button>
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>

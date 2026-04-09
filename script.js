@@ -551,8 +551,8 @@ const placeholderGradients = [
 let currentArtworkFilter = 'all-image';
 
 // ── DOM Elements ──
-const navItems    = document.querySelectorAll('.nav-item');
-const brandBtn    = document.querySelector('.brand-btn');
+const orbitItems  = document.querySelectorAll('.orbit-item');
+const backBtns    = document.querySelectorAll('.back-to-orbit');
 const views       = document.querySelectorAll('.view');
 
 const artworkFilterBtns = document.querySelectorAll('.filter-pill');
@@ -574,18 +574,19 @@ function init() {
   initNavigation();
   initArtworkFilters();
   renderAllViews();
+  initStarCanvas();
+  initFloatingDecor();
+  initParallax();
 }
 
 // ── Navigation ──
 function switchView(targetView) {
   const targetId = 'view-' + targetView;
 
-  // buttons
-  navItems.forEach(b => {
+  orbitItems.forEach(b => {
     b.classList.toggle('active', b.dataset.view === targetView);
   });
 
-  // sections
   views.forEach(v => {
     if (v.id === targetId) {
       v.classList.add('active');
@@ -596,12 +597,12 @@ function switchView(targetView) {
 }
 
 function initNavigation() {
-  navItems.forEach(btn => {
+  orbitItems.forEach(btn => {
     btn.addEventListener('click', () => switchView(btn.dataset.view));
   });
-  if (brandBtn) {
-    brandBtn.addEventListener('click', () => switchView('overview'));
-  }
+  backBtns.forEach(btn => {
+    btn.addEventListener('click', () => switchView(btn.dataset.view));
+  });
 }
 
 // ── Artwork Filters ──
@@ -817,5 +818,120 @@ modalBackdrop.addEventListener('click', closeModal);
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
+
+// ══════════════════════════════════
+// STAR PARTICLE CANVAS
+// ══════════════════════════════════
+function initStarCanvas() {
+  const canvas = document.getElementById('starCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const STAR_COUNT = 200;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < STAR_COUNT; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.3,
+      alpha: Math.random(),
+      speed: Math.random() * 0.02 + 0.005,
+      phase: Math.random() * Math.PI * 2
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const t = Date.now() * 0.001;
+    stars.forEach(s => {
+      const a = (Math.sin(t * s.speed * 10 + s.phase) + 1) * 0.5 * 0.7 + 0.3;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220,230,255,${a * s.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ══════════════════════════════════
+// FLOATING DECORATIVE SHAPES
+// ══════════════════════════════════
+function initFloatingDecor() {
+  const container = document.getElementById('floatingDecor');
+  if (!container) return;
+  const shapes = ['', 'circle', 'diamond'];
+  const COUNT = 8;
+
+  for (let i = 0; i < COUNT; i++) {
+    const el = document.createElement('div');
+    el.className = `decor-shape ${shapes[i % 3]}`;
+    const size = 30 + Math.random() * 60;
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.left = (Math.random() * 90 + 5) + '%';
+    el.style.top = (Math.random() * 90 + 5) + '%';
+    el.style.opacity = (0.15 + Math.random() * 0.2).toFixed(2);
+    const dur = 15 + Math.random() * 20;
+    const delay = Math.random() * -20;
+    el.style.animation = `float-decor-${(i % 3) + 1} ${dur}s ${delay}s ease-in-out infinite`;
+    container.appendChild(el);
+  }
+
+  // Inject keyframes for decor
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes float-decor-1 {
+      0%,100% { transform: translate(0,0) rotate(0deg); }
+      25% { transform: translate(20px,-30px) rotate(5deg); }
+      50% { transform: translate(-15px,-50px) rotate(-3deg); }
+      75% { transform: translate(10px,-20px) rotate(2deg); }
+    }
+    @keyframes float-decor-2 {
+      0%,100% { transform: translate(0,0) rotate(45deg); }
+      33% { transform: translate(-25px,20px) rotate(50deg); }
+      66% { transform: translate(15px,-25px) rotate(40deg); }
+    }
+    @keyframes float-decor-3 {
+      0%,100% { transform: translate(0,0) rotate(0deg); }
+      50% { transform: translate(30px,-40px) rotate(8deg); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// ══════════════════════════════════
+// MOUSE PARALLAX
+// ══════════════════════════════════
+function initParallax() {
+  const blobs = document.querySelectorAll('.nebula-blob');
+  const decors = document.querySelectorAll('.decor-shape');
+
+  document.addEventListener('mousemove', (e) => {
+    const cx = (e.clientX / window.innerWidth - 0.5) * 2;
+    const cy = (e.clientY / window.innerHeight - 0.5) * 2;
+
+    blobs.forEach((blob, i) => {
+      const factor = (i + 1) * 8;
+      blob.style.transform += '';
+      blob.style.marginLeft = (cx * factor) + 'px';
+      blob.style.marginTop = (cy * factor) + 'px';
+    });
+
+    decors.forEach((d, i) => {
+      const factor = (i + 1) * 4;
+      d.style.marginLeft = (cx * factor) + 'px';
+      d.style.marginTop = (cy * factor) + 'px';
+    });
+  });
+}
 
 document.addEventListener('DOMContentLoaded', init);
