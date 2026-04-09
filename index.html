@@ -247,56 +247,66 @@ function closeDetail(){detailOpen=false;detail.classList.remove('active')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
 
 document.getElementById('downloadPdfBtn').addEventListener('click', function() {
-  const element = document.body;
-  const originalWidth = element.style.width;
-  const originalHeight = element.style.height;
-  
   const btn = this;
-  const hint = document.getElementById('big-hint');
-  
-  btn.style.display = 'none';
-  if(hint) hint.style.visibility = 'hidden';
+  btn.textContent = '⏳ 생성 중...';
+  btn.disabled = true;
 
-  // Fix dimensions to current screen to avoid layout shift
-  element.style.width = window.innerWidth + 'px';
-  element.style.height = window.innerHeight + 'px';
+  const hint = document.getElementById('big-hint');
+  const starsCanvas = document.getElementById('stars');
+  const grainEl = document.querySelector('.grain');
+  const topnav = document.getElementById('topnav');
+
+  // Hide elements that cause canvas rendering issues
+  const originalHintVis = hint ? hint.style.visibility : '';
+  const originalStarsDisplay = starsCanvas ? starsCanvas.style.display : '';
+  const originalGrainDisplay = grainEl ? grainEl.style.display : '';
+  const originalNavDisplay = topnav ? topnav.style.display : '';
+
+  if(hint) hint.style.visibility = 'hidden';
+  if(starsCanvas) starsCanvas.style.display = 'none';
+  if(grainEl) grainEl.style.display = 'none';
+  if(topnav) topnav.style.display = 'none';
+
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  function restoreAll() {
+    btn.textContent = '📄 PDF DOWNLOAD';
+    btn.disabled = false;
+    if(hint) hint.style.visibility = originalHintVis;
+    if(starsCanvas) starsCanvas.style.display = originalStarsDisplay;
+    if(grainEl) grainEl.style.display = originalGrainDisplay;
+    if(topnav) topnav.style.display = originalNavDisplay;
+  }
 
   const opt = {
     margin:       0,
     filename:     'LEENAHYUN_Portfolio_Screen.pdf',
-    image:        { type: 'jpeg', quality: 1.0 },
+    image:        { type: 'jpeg', quality: 0.98 },
     html2canvas:  { 
       scale: 2, 
       useCORS: true, 
-      backgroundColor: '#0c1628', 
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      ignoreElements: function(el) {
-        if(el.id === 'downloadPdfBtn' || el.id === 'big-hint') return true;
-        if(el.classList && el.classList.contains('grain')) return true;
-        return false;
-      }
+      allowTaint: true,
+      backgroundColor: '#0c1628',
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: w,
+      windowHeight: h
     },
-    jsPDF:        { 
+    jsPDF: { 
       unit: 'px', 
-      format: [window.innerWidth, window.innerHeight], 
-      orientation: window.innerWidth > window.innerHeight ? 'landscape' : 'portrait',
-      putOnlyUsedFonts:true
+      format: [w, h], 
+      orientation: w > h ? 'landscape' : 'portrait',
+      putOnlyUsedFonts: true
     }
   };
 
-  html2pdf().set(opt).from(element).save().then(() => {
-    btn.style.display = 'block';
-    if(hint) hint.style.visibility = 'visible';
-    element.style.width = originalWidth;
-    element.style.height = originalHeight;
-  }).catch(err => {
-    console.error('PDF Error:', err);
-    btn.style.display = 'block';
-    if(hint) hint.style.visibility = 'visible';
-    element.style.width = originalWidth;
-    element.style.height = originalHeight;
-  });
+  // Short delay so the DOM updates are applied before capture
+  setTimeout(() => {
+    html2pdf().set(opt).from(document.documentElement).save()
+      .then(() => { restoreAll(); })
+      .catch(err => { console.error('PDF Error:', err); restoreAll(); });
+  }, 300);
 });
 </script>
 </body>
