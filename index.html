@@ -24,7 +24,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 #topnav .status{color:#6ee0b0}
 #scene-wrap{position:fixed;inset:0;z-index:10;perspective:1100px;perspective-origin:50% 50%}
 #scene{width:100%;height:100%;transform-style:preserve-3d}
-.orbit-card{position:absolute;transform-style:preserve-3d;cursor:pointer;transition:filter .5s,opacity .4s}
+.orbit-card{position:absolute;transform-style:preserve-3d;cursor:default;transition:filter .5s,opacity .4s;pointer-events:none}
 .orbit-card .face{position:relative;width:100%;height:100%;background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;overflow:hidden;transform-style:preserve-3d;transition:transform .4s cubic-bezier(.23,1,.32,1),background .3s,border-color .3s,box-shadow .3s}
 .orbit-card .face::before{content:'';position:absolute;inset:0;border-radius:18px;background:linear-gradient(135deg,var(--glass-hi) 0%,transparent 35%,transparent 65%,rgba(255,255,255,.05) 100%);pointer-events:none;z-index:3}
 .orbit-card .face::after{content:'';position:absolute;top:0;left:8px;right:8px;height:4px;background:linear-gradient(90deg,transparent,var(--glass-hi),transparent);border-radius:18px 18px 0 0;transform:rotateX(80deg);transform-origin:bottom;opacity:.5;z-index:4}
@@ -37,8 +37,11 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 .card-sym{font-size:22px;margin-bottom:6px;opacity:.85}
 .card-title{font-size:16px;font-weight:600;letter-spacing:.04em}
 .card-sub{font-size:10px;color:var(--text2);margin-top:3px}
+.click-hint{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.12em;color:var(--accent);opacity:0;transition:opacity .4s;z-index:6;text-align:center;white-space:nowrap;pointer-events:none}
+.orbit-card.focused .click-hint{opacity:1;animation:hintPulse 2s ease-in-out infinite}
+@keyframes hintPulse{0%,100%{opacity:.4}50%{opacity:1}}
 .orbit-card.focused .face{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.1);box-shadow:0 0 50px -10px rgba(139,164,240,.3),0 25px 70px -20px rgba(0,0,0,.5)}
-.orbit-card.focused{filter:blur(0px)!important;z-index:50!important}
+.orbit-card.focused{filter:blur(0px)!important;z-index:50!important;pointer-events:auto!important;cursor:pointer}
 .dof-sharp{filter:blur(0px)}.dof-soft{filter:blur(2px)}.dof-far{filter:blur(4.5px)}.dof-veryfar{filter:blur(7px)}
 #center-title{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:30;text-align:center;pointer-events:none;transition:opacity .4s}
 #center-title h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,72px);font-weight:300;font-style:italic;line-height:1;color:var(--text)}
@@ -142,7 +145,7 @@ cats.forEach((c,i)=>{
   else if(c.id!=='overview'){const p=P.find(p=>p.cat===c.id);if(p)th=B+p.th}
   const thH=th?`<img src="${th}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:18px;opacity:.45;z-index:0" loading="lazy">`:'';
   const ovG=c.id==='overview'?'background:linear-gradient(135deg,rgba(139,164,240,.15),rgba(60,220,170,.1));':'';
-  el.innerHTML=`<div class="face" style="${ovG}">${thH}<div class="edge-l"></div><div class="edge-b"></div><div class="glow-inner"></div><div class="refract"></div><div class="card-info"><div class="card-num">${c.n}</div><div class="card-sym">${c.s}</div><div class="card-title">${c.t}</div><div class="card-sub">${c.sub}</div></div></div>`;
+  el.innerHTML=`<div class="face" style="${ovG}">${thH}<div class="edge-l"></div><div class="edge-b"></div><div class="glow-inner"></div><div class="refract"></div><div class="click-hint">▶ CLICK TO ENTER</div><div class="card-info"><div class="card-num">${c.n}</div><div class="card-sym">${c.s}</div><div class="card-title">${c.t}</div><div class="card-sub">${c.sub}</div></div></div>`;
   el._px=.02+(i/cats.length)*.1;
   el.addEventListener('click',()=>{if(Math.round(focusedIdx)%cats.length===i)openDetail(c.id);else focusedIdx=i});
   scene.appendChild(el);cardEls.push(el);
@@ -155,6 +158,7 @@ document.addEventListener('mousemove',e=>{mouseX=(e.clientX/innerWidth-.5)*2;mou
 let wA=0;document.addEventListener('wheel',e=>{if(detailOpen)return;wA+=e.deltaY;if(Math.abs(wA)>60){focusedIdx=(focusedIdx+Math.sign(wA)+cats.length)%cats.length;wA=0;document.getElementById('hint').style.opacity='0'}},{passive:true});
 let tSX=0;document.addEventListener('touchstart',e=>{tSX=e.touches[0].clientX});
 document.addEventListener('touchend',e=>{if(detailOpen)return;const dx=e.changedTouches[0].clientX-tSX;if(Math.abs(dx)>50)focusedIdx=(focusedIdx+(dx<0?1:-1)+cats.length)%cats.length});
+document.addEventListener('keydown',e=>{if(detailOpen){if(e.key==='Escape')closeDetail();return}if(e.key==='ArrowRight'||e.key==='ArrowDown')focusedIdx=(focusedIdx+1)%cats.length;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')focusedIdx=(focusedIdx-1+cats.length)%cats.length;else if(e.key==='Enter'){const ci=Math.round(focusedIdx)%cats.length;openDetail(cats[ci].id)}});
 
 let curF=0;
 function animate(){
