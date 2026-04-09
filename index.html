@@ -24,7 +24,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 #topnav .status{color:#6ee0b0}
 #scene-wrap{position:fixed;inset:0;z-index:10;perspective:1100px;perspective-origin:50% 50%}
 #scene{width:100%;height:100%;transform-style:preserve-3d}
-.orbit-card{position:absolute;transform-style:preserve-3d;cursor:default;transition:filter .5s,opacity .4s;pointer-events:none}
+.orbit-card{position:absolute;transform-style:preserve-3d;cursor:pointer;transition:filter .5s,opacity .4s;pointer-events:auto}
 .orbit-card .face{position:relative;width:100%;height:100%;background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;overflow:hidden;transform-style:preserve-3d;transition:transform .4s cubic-bezier(.23,1,.32,1),background .3s,border-color .3s,box-shadow .3s}
 .orbit-card .face::before{content:'';position:absolute;inset:0;border-radius:18px;background:linear-gradient(135deg,var(--glass-hi) 0%,transparent 35%,transparent 65%,rgba(255,255,255,.05) 100%);pointer-events:none;z-index:3}
 .orbit-card .face::after{content:'';position:absolute;top:0;left:8px;right:8px;height:4px;background:linear-gradient(90deg,transparent,var(--glass-hi),transparent);border-radius:18px 18px 0 0;transform:rotateX(80deg);transform-origin:bottom;opacity:.5;z-index:4}
@@ -42,7 +42,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 @keyframes hintPulse{0%,100%{opacity:.4}50%{opacity:1}}
 .orbit-card.focused .face{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.1);box-shadow:0 0 50px -10px rgba(139,164,240,.3),0 25px 70px -20px rgba(0,0,0,.5)}
 .orbit-card.focused{filter:blur(0px)!important;z-index:50!important;pointer-events:auto!important;cursor:pointer}
-.dof-sharp{filter:blur(0px)}.dof-soft{filter:blur(2px)}.dof-far{filter:blur(4.5px)}.dof-veryfar{filter:blur(7px)}
+.dof-sharp{filter:blur(0px)}.dof-soft{filter:blur(2px);pointer-events:auto}.dof-far{filter:blur(4.5px);pointer-events:auto}.dof-veryfar{filter:blur(7px);pointer-events:auto}
 #center-title{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:30;text-align:center;pointer-events:none;transition:opacity .4s}
 #center-title h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,72px);font-weight:300;font-style:italic;line-height:1;color:var(--text)}
 #center-title .accent{font-weight:600;font-style:normal;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -89,8 +89,33 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 .art-filters{display:flex;gap:8px;margin-top:16px;margin-bottom:16px;flex-wrap:wrap}
 .art-filter{font-size:11px;padding:5px 14px;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
 .art-filter.active,.art-filter:hover{background:rgba(255,255,255,.1);color:var(--text);border-color:rgba(255,255,255,.25)}
-#hint{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:100;font-size:10px;letter-spacing:.12em;color:var(--text2);animation:pulse 2.5s ease-in-out infinite;text-align:center}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.7}}
+#big-hint {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  font-family: Pretendard, -apple-system, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0px;
+  color: #ffffff;
+  text-align: center;
+  background: rgba(12, 22, 40, 0.85);
+  padding: 18px 40px;
+  border-radius: 40px;
+  border: 1px solid rgba(138, 180, 248, 0.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 20px rgba(138,180,248,0.2);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+  animation: pulseBigHint 2s ease-in-out infinite;
+  white-space: nowrap;
+  transition: opacity 0.5s;
+}
+@keyframes pulseBigHint {
+  0%, 100% { opacity: 0.85; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(-8px); box-shadow: 0 12px 40px rgba(0,0,0,0.8), 0 0 30px rgba(138,180,248,0.4); }
+}
 @media(max-width:768px){#indicators{display:none}.skills-grid{grid-template-columns:1fr}.sub-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
 </style>
 </head>
@@ -101,7 +126,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none}
 <div id="center-title"><h1>LEE<br><span class="accent">NAHYUN</span></h1><div class="sub">AI Creator · Visual Director · System-Based Workflow</div></div>
 <div id="scene-wrap"><div id="scene"></div></div>
 <div id="indicators"></div>
-<div id="hint">SCROLL TO NAVIGATE · CLICK TO OPEN</div>
+<div id="big-hint">🖱️ 다른 카테고리를 보려면 <b>마우스 휠</b>을 돌리세요! <br><span style="font-size: 13px; font-weight: 400; color: #aab8e0; margin-top: 6px; display: inline-block;">(카드를 클릭하면 상세 프로젝트가 열립니다)</span></div>
 <div id="detail"><div class="d-inner" id="dI"></div></div>
 <script src="https://nahyun1993.github.io/portfolio3/script.js" onerror="console.log('External script not needed - using inline data')"></script>
 <script>
@@ -155,7 +180,7 @@ cats.forEach((c,i)=>{
 });
 
 document.addEventListener('mousemove',e=>{mouseX=(e.clientX/innerWidth-.5)*2;mouseY=(e.clientY/innerHeight-.5)*2});
-let wA=0;document.addEventListener('wheel',e=>{if(detailOpen)return;wA+=e.deltaY;if(Math.abs(wA)>60){focusedIdx=(focusedIdx+Math.sign(wA)+cats.length)%cats.length;wA=0;document.getElementById('hint').style.opacity='0'}},{passive:true});
+let wA=0;document.addEventListener('wheel',e=>{if(detailOpen)return;wA+=e.deltaY;if(Math.abs(wA)>60){focusedIdx=(focusedIdx+Math.sign(wA)+cats.length)%cats.length;wA=0}},{passive:true});
 let tSX=0;document.addEventListener('touchstart',e=>{tSX=e.touches[0].clientX});
 document.addEventListener('touchend',e=>{if(detailOpen)return;const dx=e.changedTouches[0].clientX-tSX;if(Math.abs(dx)>50)focusedIdx=(focusedIdx+(dx<0?1:-1)+cats.length)%cats.length});
 document.addEventListener('keydown',e=>{if(detailOpen){if(e.key==='Escape')closeDetail();return}if(e.key==='ArrowRight'||e.key==='ArrowDown')focusedIdx=(focusedIdx+1)%cats.length;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')focusedIdx=(focusedIdx-1+cats.length)%cats.length;else if(e.key==='Enter'){const ci=Math.round(focusedIdx)%cats.length;openDetail(cats[ci].id)}});
