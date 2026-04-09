@@ -617,14 +617,11 @@ function initArtworkFilters() {
   });
 }
 
-// ── Float animation assignment (deterministic) ──
-const FLOAT_ANIMS = ['float-a', 'float-b', 'float-c', 'float-d', 'float-e'];
+// ── Depth layer assignment (deterministic per index) ──
+const DEPTH_LAYERS = ['near', 'mid', 'mid', 'far', 'mid', 'far', 'near', 'deep', 'mid', 'far'];
 
-function floatProps(index) {
-  const anim    = FLOAT_ANIMS[index % 5];
-  const delay   = ((index * 1.7) % 5).toFixed(1);
-  const dur     = (11 + (index * 2.3) % 7).toFixed(1);
-  return `--anim-name:${anim}; --anim-delay:${delay}s; --anim-dur:${dur}s;`;
+function getDepthLayer(index) {
+  return DEPTH_LAYERS[index % DEPTH_LAYERS.length];
 }
 
 // ── Render ──
@@ -674,13 +671,15 @@ function createFloatCard(project, index, extraClass = '') {
       ? 'card-portrait'
       : (index % 5 === 0 ? 'card-wide featured' : '');
 
+  const depth = getDepthLayer(index);
+
   const placeholderStyle = !project.thumbnail
     ? `style="background:${placeholderGradients[project.id % placeholderGradients.length]}"`
     : '';
 
   return `
     <div class="float-card ${shapeClass}" data-id="${project.id}"
-         style="${floatProps(index)}">
+         data-depth="${depth}">
       <div class="float-card-inner" ${placeholderStyle}>
         ${project.thumbnail ? `<img src="${project.thumbnail}" alt="${project.title}" loading="lazy">` : ''}
         <div class="float-card-overlay">
@@ -909,29 +908,69 @@ function initFloatingDecor() {
 }
 
 // ══════════════════════════════════
-// MOUSE PARALLAX
+// DEPTH-AWARE 3D PARALLAX
 // ══════════════════════════════════
 function initParallax() {
   const blobs = document.querySelectorAll('.nebula-blob');
   const decors = document.querySelectorAll('.decor-shape');
 
-  document.addEventListener('mousemove', (e) => {
-    const cx = (e.clientX / window.innerWidth - 0.5) * 2;
-    const cy = (e.clientY / window.innerHeight - 0.5) * 2;
+  // Speed multipliers per depth layer
+  const depthSpeed = { near: 25, mid: 12, far: 5, deep: 2 };
+  // Tilt multipliers per depth
+  const depthTilt = { near: 3, mid: 1.5, far: 0.6, deep: 0.2 };
 
+  let mouseX = 0, mouseY = 0;
+  let rafId = null;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateParallax);
+    }
+  });
+
+  function updateParallax() {
+    rafId = null;
+
+    // Background blobs parallax
     blobs.forEach((blob, i) => {
       const factor = (i + 1) * 8;
-      blob.style.transform += '';
-      blob.style.marginLeft = (cx * factor) + 'px';
-      blob.style.marginTop = (cy * factor) + 'px';
+      blob.style.marginLeft = (mouseX * factor) + 'px';
+      blob.style.marginTop = (mouseY * factor) + 'px';
     });
 
+    // Decorative shapes parallax
     decors.forEach((d, i) => {
       const factor = (i + 1) * 4;
-      d.style.marginLeft = (cx * factor) + 'px';
-      d.style.marginTop = (cy * factor) + 'px';
+      d.style.marginLeft = (mouseX * factor) + 'px';
+      d.style.marginTop = (mouseY * factor) + 'px';
     });
-  });
+
+    // 3D float-stage tilt (whole grid perspective shift)
+    document.querySelectorAll('.float-stage').forEach(stage => {
+      const rx = mouseY * -2;
+      const ry = mouseX * 3;
+      stage.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+
+    // Per-card depth-based parallax shift
+    document.querySelectorAll('.float-card').forEach(card => {
+      const depth = card.dataset.depth || 'mid';
+      const speed = depthSpeed[depth] || 12;
+      const tilt = depthTilt[depth] || 1.5;
+      const zDepth = getComputedStyle(card).getPropertyValue('--z-depth') || '0px';
+
+      const tx = mouseX * speed;
+      const ty = mouseY * speed * 0.6;
+      const rx = mouseY * -tilt;
+      const ry = mouseX * tilt;
+
+      card.style.transform =
+        `translateZ(${zDepth}) translate(${tx}px, ${ty}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);

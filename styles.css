@@ -556,7 +556,7 @@ button { cursor: pointer; }
 }
 
 /* ══════════════════════════════════
-   FLOATING STAGE — GLASSMORPHISM CARDS
+   FLOATING STAGE — 3D PERSPECTIVE SPACE
    ══════════════════════════════════ */
 .float-stage {
   display: grid;
@@ -564,6 +564,9 @@ button { cursor: pointer; }
   gap: 24px;
   padding: 32px 48px 80px;
   align-items: start;
+  perspective: 1200px;
+  perspective-origin: 50% 40%;
+  transform-style: preserve-3d;
 }
 
 /* ── Float card ── */
@@ -573,34 +576,94 @@ button { cursor: pointer; }
   outline: none;
   border: none;
   background: none;
-  animation-name: var(--anim-name, float-a);
-  animation-duration: var(--anim-dur, 12s);
-  animation-delay: var(--anim-delay, 0s);
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-  will-change: transform;
+  transform-style: preserve-3d;
+  /* Z-depth applied via inline style --z-depth */
+  transform: translateZ(var(--z-depth, 0px));
+  filter: blur(var(--dof-blur, 0px)) brightness(var(--dof-bright, 1));
+  opacity: var(--dof-opacity, 1);
+  transition: filter 0.6s var(--ease), opacity 0.6s var(--ease),
+              transform 0.4s var(--ease);
+  will-change: transform, filter;
 }
 
 .float-card.featured { grid-column: span 2; }
 
+/* ── Depth layers ── */
+.float-card[data-depth="near"] {
+  --z-depth: 80px;
+  --dof-blur: 0px;
+  --dof-bright: 1;
+  --dof-opacity: 1;
+  z-index: 30;
+}
+.float-card[data-depth="mid"] {
+  --z-depth: 0px;
+  --dof-blur: 0px;
+  --dof-bright: 0.95;
+  --dof-opacity: 0.95;
+  z-index: 20;
+}
+.float-card[data-depth="far"] {
+  --z-depth: -120px;
+  --dof-blur: 1.5px;
+  --dof-bright: 0.8;
+  --dof-opacity: 0.7;
+  z-index: 10;
+}
+.float-card[data-depth="deep"] {
+  --z-depth: -240px;
+  --dof-blur: 3px;
+  --dof-bright: 0.65;
+  --dof-opacity: 0.5;
+  z-index: 5;
+}
+
+/* Hover: pull into focus regardless of depth */
+.float-card:hover {
+  filter: blur(0px) brightness(1) !important;
+  opacity: 1 !important;
+  transform: translateZ(var(--z-depth, 0px)) scale(1.04);
+  z-index: 50 !important;
+}
+
+/* ── Glass Block Card Inner ──
+   Thick glass with edge highlights and volume */
 .float-card-inner {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4/5;
   border-radius: 16px;
-  background: rgba(15,20,35,0.6);
+  background: rgba(15,20,35,0.5);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
+  transform-style: preserve-3d;
   transition: all 0.4s var(--ease);
+
+  /* Glass block: layered borders for thickness illusion */
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    /* Top edge highlight — light hitting the glass top */
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    /* Left edge highlight — side light reflection */
+    inset 1px 0 0 rgba(200,220,255,0.1),
+    /* Bottom thick edge — glass block bottom bevel */
+    inset 0 -3px 0 rgba(0,0,0,0.25),
+    /* Right thick edge — glass block side bevel */
+    inset -3px 0 0 rgba(0,0,0,0.15),
+    /* External soft glow — volumetric light scatter */
+    0 4px 20px rgba(0,0,0,0.4),
+    0 0 1px rgba(138,180,248,0.08);
 }
 
 .float-card:hover .float-card-inner {
-  border-color: rgba(138,180,248,0.25);
+  border-color: rgba(138,180,248,0.3);
   box-shadow:
-    0 8px 32px rgba(0,0,0,0.3),
-    0 0 40px rgba(138,180,248,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.05);
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    inset 1px 0 0 rgba(200,220,255,0.15),
+    inset 0 -3px 0 rgba(0,0,0,0.2),
+    inset -3px 0 0 rgba(0,0,0,0.12),
+    0 12px 40px rgba(0,0,0,0.5),
+    0 0 50px rgba(138,180,248,0.1),
+    0 0 80px rgba(138,180,248,0.04);
 }
 
 .float-card.card-wide .float-card-inner  { aspect-ratio: 16/9; }
@@ -621,35 +684,44 @@ button { cursor: pointer; }
   filter: brightness(1) saturate(1.1);
 }
 
-/* Holo border glow animation */
+/* Glass edge highlight — top/left light refraction line */
 .float-card-inner::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  border-radius: 17px;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  border-radius: 16px 16px 0 0;
   background: linear-gradient(
-    135deg,
-    transparent 0%,
-    rgba(138,180,248,0.15) 25%,
-    rgba(224,86,160,0.12) 50%,
-    rgba(46,204,148,0.15) 75%,
+    180deg,
+    rgba(255,255,255,0.08) 0%,
+    rgba(255,255,255,0.02) 40%,
     transparent 100%
   );
-  background-size: 400% 400%;
-  z-index: -1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Glass bottom edge — thick bevel reflection */
+.float-card-inner::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(
+    to right,
+    rgba(138,180,248,0.06) 0%,
+    rgba(224,86,160,0.05) 50%,
+    rgba(46,204,148,0.06) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
   opacity: 0;
   transition: opacity 0.4s;
-  animation: holo-border 6s ease-in-out infinite;
 }
 
-.float-card:hover .float-card-inner::before {
+.float-card:hover .float-card-inner::after {
   opacity: 1;
-}
-
-@keyframes holo-border {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 /* Info overlay */
@@ -668,6 +740,7 @@ button { cursor: pointer; }
   padding: 20px 16px;
   opacity: 0;
   transition: opacity 0.35s var(--ease);
+  z-index: 3;
 }
 
 .float-card:hover .float-card-overlay { opacity: 1; }
@@ -695,32 +768,6 @@ button { cursor: pointer; }
   font-weight: 400;
   line-height: 1.35;
   color: var(--text);
-}
-
-/* ── Float keyframe variants ── */
-@keyframes float-a {
-  0%, 100% { transform: translateY(0px) rotate(-0.3deg); }
-  40%  { transform: translateY(-14px) rotate(0.2deg); }
-  70%  { transform: translateY(5px) rotate(-0.15deg); }
-}
-@keyframes float-b {
-  0%, 100% { transform: translateY(-4px) rotate(0.2deg); }
-  45%  { transform: translateY(10px) rotate(-0.3deg); }
-  80%  { transform: translateY(-8px) rotate(0.15deg); }
-}
-@keyframes float-c {
-  0%, 100% { transform: translateY(3px) rotate(0deg); }
-  30%  { transform: translateY(-16px) rotate(-0.4deg); }
-  65%  { transform: translateY(8px) rotate(0.3deg); }
-}
-@keyframes float-d {
-  0%, 100% { transform: translateY(-2px) rotate(-0.15deg); }
-  50%  { transform: translateY(12px) rotate(0.35deg); }
-}
-@keyframes float-e {
-  0%, 100% { transform: translateY(6px) rotate(0.2deg); }
-  35%  { transform: translateY(-10px) rotate(-0.2deg); }
-  75%  { transform: translateY(3px) rotate(0.15deg); }
 }
 
 /* ══════════════════════════════════
@@ -988,6 +1035,3 @@ button { cursor: pointer; }
   .center-bio { display: none; }
   .tool-categories { flex-direction: column; align-items: center; }
 }
-
-/* Force Cache Bust Update */
-
