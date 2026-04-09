@@ -192,7 +192,7 @@ function animate(){
   scene.style.transform=`rotateX(${sceneRX}deg) rotateY(${sceneRY}deg)`;
   const fA=(curF/cats.length)*Math.PI*2;
   cardEls.forEach((el,i)=>{
-    const a=(i/cats.length)*Math.PI*2-Math.PI/2-fA;
+    const a=(i/cats.length)*Math.PI*2+Math.PI/2-fA;
     const x=Math.cos(a)*RX,z=Math.sin(a)*RZ,y=Math.sin(a*.5)*25;
     const px=mouseX*el._px*80,py=mouseY*el._px*50;
     const nZ=(z+RZ)/(RZ*2),sc=.55+nZ*.55,op=.3+nZ*.7;
