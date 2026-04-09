@@ -249,34 +249,42 @@ function closeDetail(){detailOpen=false;detail.classList.remove('active')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
 
 document.getElementById('downloadPdfBtn').addEventListener('click', function() {
-  const btn = this;
+  var btn = this;
   btn.textContent = '⏳ 생성 중...';
   btn.disabled = true;
 
-  const hint = document.getElementById('big-hint');
-  const starsCanvas = document.getElementById('stars');
-  const grainEl = document.querySelector('.grain');
+  // Physically remove problematic animated elements from DOM before capture
+  var starsCanvas = document.getElementById('stars');
+  var grainEl = document.querySelector('.grain');
+  var nebulaEl = document.querySelector('.nebula-bg');
+  var hint = document.getElementById('big-hint');
 
-  const savedHint = hint ? hint.style.visibility : '';
-  const savedStars = starsCanvas ? starsCanvas.style.display : '';
-  const savedGrain = grainEl ? grainEl.style.display : '';
+  var starsParent = starsCanvas ? starsCanvas.parentNode : null;
+  var starsNext   = starsCanvas ? starsCanvas.nextSibling : null;
+  var grainParent = grainEl ? grainEl.parentNode : null;
+  var grainNext   = grainEl ? grainEl.nextSibling : null;
+  var nebulaParent = nebulaEl ? nebulaEl.parentNode : null;
+  var nebulaNext   = nebulaEl ? nebulaEl.nextSibling : null;
 
+  if(starsCanvas) starsCanvas.remove();
+  if(grainEl) grainEl.remove();
+  if(nebulaEl) nebulaEl.remove();
   if(hint) hint.style.visibility = 'hidden';
-  if(starsCanvas) starsCanvas.style.display = 'none';
-  if(grainEl) grainEl.style.display = 'none';
 
   function restoreAll() {
     btn.textContent = '📄 PDF DOWNLOAD';
     btn.disabled = false;
-    if(hint) hint.style.visibility = savedHint;
-    if(starsCanvas) starsCanvas.style.display = savedStars;
-    if(grainEl) grainEl.style.display = savedGrain;
+    if(hint) hint.style.visibility = '';
+    if(starsCanvas && starsParent) starsParent.insertBefore(starsCanvas, starsNext);
+    if(grainEl && grainParent) grainParent.insertBefore(grainEl, grainNext);
+    if(nebulaEl && nebulaParent) nebulaParent.insertBefore(nebulaEl, nebulaNext);
   }
 
-  const w = window.innerWidth;
-  const h = window.innerHeight;
+  var w = window.innerWidth;
+  var h = window.innerHeight;
 
   setTimeout(function() {
+    console.log('[PDF] Capturing screen...');
     html2canvas(document.body, {
       scale: 2,
       useCORS: true,
@@ -287,10 +295,12 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
       width: w,
       height: h,
       windowWidth: w,
-      windowHeight: h
+      windowHeight: h,
+      logging: false
     }).then(function(canvas) {
-      var imgData = canvas.toDataURL('image/jpeg', 0.98);
-      var { jsPDF } = window.jspdf;
+      console.log('[PDF] Done! Saving...');
+      var imgData = canvas.toDataURL('image/jpeg', 0.95);
+      var jsPDF = window.jspdf.jsPDF;
       var pdf = new jsPDF({
         orientation: w > h ? 'landscape' : 'portrait',
         unit: 'px',
@@ -301,11 +311,11 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function() {
       pdf.save('LEENAHYUN_Portfolio_Screen.pdf');
       restoreAll();
     }).catch(function(err) {
-      console.error('PDF Error:', err);
-      alert('PDF 생성 중 오류가 발생했습니다: ' + err.message);
+      console.error('[PDF] Error:', err);
+      alert('PDF 오류: ' + err.message);
       restoreAll();
     });
-  }, 400);
+  }, 500);
 });
 </script>
 </body>
