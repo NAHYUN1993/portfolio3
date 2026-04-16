@@ -60,7 +60,7 @@ const projects = [
     process: [
       { title: '일관성 확보 및 컷 생성', desc: '캐릭터 시트를 우선 제작하여 컷마다 인물 생김새가 달라지는 AI의 무작위성을 통제함. 확정된 캐릭터 페르소나를 기반으로 분갈이 공정별 주요 장면을 생성함.' },
       { title: '디테일 보정', desc: '생성형 AI 특성상 제품 패키지의 로고나 텍스트가 왜곡되는 현상이 발생하여, 포토샵을 활용한 이미지 합성 및 리터칭으로 왜곡된 제품 영역에 실제 고화질 제품 이미지를 합성함.' },
-      { title: '영상화 및 컷 편집', desc: '보정 완료된 이미지를 클링 모델로 생성. 프리미어 프로에서 컷 연결, 스피드 램핑' }
+      { title: '영상화 및 컷 편집', desc: '보정 완료된 이미지를 클링 모델로 생성. 프리미어 프로에서 컷 연결, 스피드 램핑.' }
     ],
     toolsDetail: ['Nano Banana', 'Adobe Photoshop', 'Kling', 'Adobe Premiere Pro']
   },
@@ -133,10 +133,10 @@ const projects = [
     category: 'animation',
     categoryLabel: '단편 애니메이션',
     title: '페어리웜',
-    desc: '모녀 갈등과 화해라는 보편적 서사를 판타지 세계관으로 풀어내고, 자체 구축한 \'AI 일관성 빌더(Consistency Builder)\'를 도입해 팀 프로젝트의 이미지 렌더링 리드타임을 혁신적으로 단축한 단편 애니메이션.',
+    desc: '모녀 갈등과 화해라는 보편적 서사를 판타지 세계관으로 풀어낸 단편 애니메이션.',
     thumbnail: 'images/Thumbnails/단편애니메이션_페어리웜.png',
     badge: 'team',
-    badgeLabel: '👥 팀 프로젝트 (리드)',
+    badgeLabel: '👥 팀 프로젝트',
     tools: ['Nano Banana', 'Kling', 'ElevenLabs', 'Midjourney'],
     driveId: '1_Ufz9Cl5DFbKYD_R6MPaxhATJ8vLGei5',
     orientation: 'horizontal',
@@ -166,7 +166,7 @@ const projects = [
     desc: '인간의 탐욕(순혈주의 펫샵)이 부른 좀비 바이러스 사태 속에서, 순수함을 간직한 아이들과 실험체 강아지들이 연대하여 재난을 극복해 나가는 SF 스릴러.',
     thumbnail: 'images/Thumbnails/단편영화_개물림사고주의.png',
     badge: 'team',
-    badgeLabel: '👥 팀 프로젝트 (리드)',
+    badgeLabel: '👥 팀 프로젝트',
     tools: ['Kling', 'Premiere Pro'],
     driveId: '1k3vUbi10fCBuQrny8BzC4N006jmxTZ9h',
     orientation: 'horizontal',
@@ -179,7 +179,7 @@ const projects = [
       'images/주요장면/개물림사고주의/개물림사고주의 주요장면_06.png'
     ],
     tags: ['SF', '스릴러'],
-    brief: '인간의 이기적 욕망이 초래한 재난 상황 속에서 연대와 극복이라는 메시지를 담았습니다. 총괄 편집 리드로서 분업화된 에셋을 모아 완결된 서사 흐름으로 연출하고, AI의 취약점인 대사 처리를 극복했습니다.',
+    brief: '인간의 이기적 욕망이 초래한 재난 상황 속에서 연대와 극복이라는 메시지를 담음. 총괄 편집 리드로서 분업화된 에셋을 모아 완결된 서사 흐름으로 연출하고, AI의 취약점인 대사 처리를 극복함.',
     process: [
       { title: 'AI 립싱크 구현', desc: 'Kling의 디지털 캐릭터 기능을 적극 활용. 인물 이미지 에셋에 더빙 오디오 소스를 결합하여 캐릭터의 입 모양과 미세한 안면 근육이 자연스럽게 움직이도록 구현함.' },
       { title: '서사 편집 및 사운드 디자인', desc: '팀원들이 분업으로 생성한 대량의 AI 영상·이미지 에셋을 Premiere Pro에서 하나의 완결된 서사 흐름으로 편집하고, 사운드를 디자인함.' }
@@ -518,7 +518,7 @@ const liveActionVideos = [
 
 const dashboardProject = {
   id: 401, type: 'image', category: 'dashboard', categoryLabel: '대시보드',
-  title: '유튜브 API 및 AI 기반 채널 성과 분석 대시보드 자체 구축', 
+  title: '[유튜브 채널 분석 대시보드]', 
   desc: '유튜브 스튜디오 기본 제공 지표의 한계를 넘어, VPH(시간당 조회수)와 아웃라이어(Outlier) 등 핵심 성장 지표를 수치화하고 타 채널 비교 및 키워드 분석까지 통합한 데이터 기반의 콘텐츠 기획 환경 구축.',
   thumbnail: 'images/웹앱/유튜브 성과지표 01.png', badge: 'company', badgeLabel: '📊 Web App',
   tools: ['API', 'Claude OPUS'], orientation: 'horizontal',
@@ -529,7 +529,7 @@ const dashboardProject = {
     'images/웹앱/유튜브 성과지표 03.png'
   ], 
   tags: ['대시보드', '데이터분석', 'API연동'],
-  brief: '단순한 직관이나 감에 의존하는 콘텐츠 기획에서 벗어나, 객관적인 데이터 기반으로 채널의 고속 성장을 견인할 자체적인 분석 시스템이 필요했음. 이에 유튜브 API와 AI를 결합하여 영상의 폭발력과 시청자 반응을 입체적으로 측정할 수 있는 커스텀 대시보드를 개발함.',
+  brief: '단순한 직관이나 감에 의존하는 콘텐츠 기획에서 벗어나, 객관적인 데이터 기반으로 채널의 고속 성장을 견인할 자체적인 분석 시스템이 필요했음. 이에 유튜브 API(YouTube Data API v3)와 AI를 결합하여 영상의 폭발력과 시청자 반응을 입체적으로 측정할 수 있는 커스텀 대시보드를 개발함.',
   process: [
     { title: '1) 유튜브 API 연동 및 심층 데이터 추출', desc: '유튜브 스튜디오 고급 모드에서도 직관적으로 확인하기 어려운 로우 데이터(Raw Data)를 API를 통해 직접 연동 및 추출하는 파이프라인을 설계함.' },
     { title: '2) 핵심 성장 지표 및 아웃라이어 수치화', desc: '영상의 초기 폭발력을 증명하는 VPH(Views Per Hour), 채널 평균 대비 성과를 보여주는 아웃라이어(Outlier) 지수, 그리고 실질적인 시청자 참여율 등을 자동으로 계산하는 AI 기반 분석 로직을 구현함.' },
@@ -539,7 +539,56 @@ const dashboardProject = {
   toolsDetail: ['안티그래비티', '클로드 OPUS 모델']
 };
 
-projects.push(...liveActionVideos, dashboardProject);
+const insightTubeProject = {
+  id: 402, type: 'image', category: 'dashboard', categoryLabel: '대시보드',
+  title: '[InsightTube 대시보드]',
+  desc: 'YouTube Data API 기반 크리에이터/채널 성장 지표 분석 웹앱',
+  thumbnail: 'images/웹앱/채널분석01.png', badge: 'personal', badgeLabel: '📊 Web App',
+  tools: ['YouTube Data API v3'], orientation: 'horizontal',
+  scenes: [],
+  images: [
+    'images/웹앱/채널분석01.png',
+    'images/웹앱/채널분석02.png',
+    'images/웹앱/채널분석03.png',
+    'images/웹앱/채널분석04.png'
+  ],
+  tags: ['대시보드', '데이터분석', 'API연동'],
+  brief: '"경쟁 채널의 URL 단 하나만으로 VPH, 참여율, 아웃라이어 등 핵심 성장 지표(KPI)를 원클릭으로 추출하고 시각화하는 데이터 분석 대시보드"\n\n[기획 배경 및 문제 인식]\n감에 의존하는 콘텐츠 기획의 한계: 성공적인 콘텐츠 전략을 세우기 위해 경쟁 채널 분석이 필수적이나, 기존에는 영상마다 일일이 조회수, 업로드 시간, 댓글 수를 확인하고 엑셀로 수작업 계산을 해야 하는 리소스 낭비가 심했음.\n표면적 데이터의 한계: 유튜브 화면에 보이는 단순 조회수나 구독자 수만으로는 해당 채널의 진짜 \'활성도\'나 \'폭발력(알고리즘 선택 여부)\'을 파악하기 어려움.',
+  process: [
+    { title: '원클릭 데이터 파이프라인', desc: 'YouTube Data API v3를 연동하여, 사용자가 채널 URL만 입력하면 즉시 채널의 전체 메타데이터를 수집 및 분석하는 자동화 환경 구축.' },
+    { title: '콘텐츠 성과 측정', desc: '단순히 총조회수가 아닌, 영상의 폭발력을 보여주는 평균 VPH와 시청자 반응을 나타내는 참여율을 공식화하여 계산.' },
+    { title: '아웃라이어 탐지 로직', desc: '채널의 평균 조회수 대비 기형적으로 높은 성과를 낸 \'아웃라이어\'를 자동으로 필터링하여, 벤치마킹할 핵심 콘텐츠를 빠르게 도출.' },
+    { title: '패턴 및 텍스트 분석', desc: '시간대별/요일별 업로드 패턴과 고성과 영상의 \'제목/콘텐츠 특징\'을 한눈에 파악할 수 있도록 대시보드 형태로 제공.' }
+  ],
+  toolsDetail: ['YouTube Data API', 'React', 'AI']
+};
+
+const quickPromptProject = {
+  id: 403, type: 'image', category: 'dashboard', categoryLabel: '대시보드',
+  title: '[QuickPrompt]',
+  desc: '단 번의 클릭으로 원하는 프롬프트를 입력창에 즉시 주입하는 브라우저 확장 프로그램.',
+  thumbnail: 'images/웹앱/챗봇01.png', badge: 'personal', badgeLabel: '🚀 Extension',
+  tools: ['안티그래비티', '바이브 코딩'], orientation: 'horizontal',
+  scenes: [],
+  images: [
+    'images/웹앱/챗봇01.png',
+    'images/웹앱/챗봇02.png',
+    'images/웹앱/챗봇03.png',
+    'images/웹앱/챗봇04.png'
+  ],
+  tags: ['확장프로그램', '바이브코딩', '프롬프트'],
+  brief: '"반복되는 프롬프트 입력의 번거로움을 없애고, 단 한 번의 클릭으로 원하는 프롬프트를 입력창에 즉시 주입하는 브라우저 확장 프로그램."\n\n[기획 배경 및 문제 인식]\n제미나이, 미드저니 등 다양한 생성형 AI 플랫폼 활용이 늘어나면서, 자주 쓰는 프롬프트를 매번 메모장이나 노션에서 찾아 복사/붙여넣기 해야 하는 번거로움이 발생.\n작업 흐름의 단절: 프롬프트를 찾기 위해 탭이나 창을 전환하는 과정에서 작업 흐름이 끊기고 불필요한 시간이 소모됨.\n\n[개발 방식: 안티그래비티 기반 \'바이브 코딩\']',
+  process: [
+    { title: 'AI 에이전트 주도 개발', desc: '기존의 전통적인 하드코딩 방식이 아닌, 구글의 안티그래비티를 활용해 프로젝트를 완성함.' },
+    { title: '프롬프트 엔지니어링 및 바이브 코딩 적용', desc: 'AI에게 \'어떤 기능이 필요한지, 플로팅 UI는 어떻게 띄울지, 입력창 타겟팅은 어떻게 할지\' 등 요구사항을 프롬프트로 지시함.' },
+    { title: '해결방안 - 플로팅 UI를 통한 접근성 극대화', desc: '화면 어느 곳에서나 즉각적으로 접근할 수 있는 \'플로팅 버튼\'을 구현하여 사용자의 동선을 최소화함.' },
+    { title: '원클릭 프롬프트 주입', desc: '플로팅 메뉴에서 사전에 등록해 둔 프롬프트를 선택하면, 현재 활성화된 웹페이지의 입력창에 텍스트가 자동으로 삽입되도록 구현.' },
+    { title: '빠른 실행 환경', desc: '웹페이지 이동 없이 현재 창에서 오버레이 형태로 동작하여 끊김 없는 사용자 경험 제공.' }
+  ],
+  toolsDetail: ['안티그래비티', 'JavaScript']
+};
+
+projects.push(...liveActionVideos, dashboardProject, insightTubeProject, quickPromptProject);
 
 const placeholderGradients = [
   'linear-gradient(135deg, #121216 0%, #1e1e24 100%)',
