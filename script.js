@@ -311,13 +311,20 @@ const projects = [
     categoryLabel: '제품 홍보 영상',
     title: '복합 천연 식물 영양제',
     desc: '[스토리텔링 커머스] 세대 공감 서사를 활용한 작물 영양제 홍보 영상. 오래된 관행을 고집하는 아빠와 새로운 혁신(자사 제품)을 권하는 딸의 유쾌한 티격태격 갈등을 통해, 지루한 기능 설명(Feature)을 매력적인 이야기(Story)로 치환하여 제품의 효능을 자연스럽게 전달하는 브랜디드 롱폼 콘텐츠.',
-    thumbnail: '',
+    thumbnail: 'images/Thumbnails/효소아미노 썸네일.png',
     badge: 'company',
     badgeLabel: '🏢 회사 프로젝트',
     tools: ['Nano Banana', 'Kling', 'Premiere Pro'],
     driveId: '1N4obvX2d8vgcu0tt4NML0nU0qNELyRTX',
     orientation: 'horizontal',
-    scenes: [],
+    scenes: [
+      'images/주요장면/효소아미노/1.png',
+      'images/주요장면/효소아미노/2.png',
+      'images/주요장면/효소아미노/3.jpeg',
+      'images/주요장면/효소아미노/4.jpeg',
+      'images/주요장면/효소아미노/5.jpeg',
+      'images/주요장면/효소아미노/6.png'
+    ],
     tags: ['광고', '스토리텔링'],
     brief: '단순한 제품 효능 나열식 홍보의 높은 이탈률을 극복하기 위해 스토리텔링 기법을 도입함. \'전통 vs 혁신\'이라는 보편적인 세대 갈등을 코믹하게 풀어내어 시청자의 심리적 방어벽을 낮추고, 서사의 흐름 속에서 자연스럽게 제품의 필요성과 타당성을 설득함.',
     process: [
