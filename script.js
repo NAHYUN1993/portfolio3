@@ -5,6 +5,36 @@
 // ── Project Data ──
 const projects = [
   {
+    id: 104,
+    type: 'video',
+    category: 'ad',
+    categoryLabel: '제품 홍보 영상',
+    title: '복합 천연 식물 영양제',
+    desc: '[스토리텔링 커머스] 세대 공감 서사를 활용한 작물 영양제 홍보 영상. 오래된 관행을 고집하는 아빠와 새로운 혁신(자사 제품)을 권하는 딸의 유쾌한 티격태격 갈등을 통해, 지루한 기능 설명(Feature)을 매력적인 이야기(Story)로 치환하여 제품의 효능을 자연스럽게 전달하는 브랜디드 롱폼 콘텐츠.',
+    thumbnail: 'images/Thumbnails/효소아미노 썸네일.png',
+    badge: 'company',
+    badgeLabel: '🏢 회사 프로젝트',
+    tools: ['Nano Banana', 'Kling', 'Premiere Pro'],
+    driveId: '1N4obvX2d8vgcu0tt4NML0nU0qNELyRTX',
+    orientation: 'horizontal',
+    scenes: [
+      'images/주요장면/효소아미노/1.png',
+      'images/주요장면/효소아미노/2.png',
+      'images/주요장면/효소아미노/3.jpeg',
+      'images/주요장면/효소아미노/4.jpeg',
+      'images/주요장면/효소아미노/5.jpeg',
+      'images/주요장면/효소아미노/6.png'
+    ],
+    tags: ['광고', '스토리텔링'],
+    brief: '단순한 제품 효능 나열식 홍보의 높은 이탈률을 극복하기 위해 스토리텔링 기법을 도입함. \'전통 vs 혁신\'이라는 보편적인 세대 갈등을 코믹하게 풀어내어 시청자의 심리적 방어벽을 낮추고, 서사의 흐름 속에서 자연스럽게 제품의 필요성과 타당성을 설득함.',
+    process: [
+      { title: '갈등 구조 및 캐릭터 페르소나 기획', desc: '\'고집스러운 아빠\'와 \'합리적인 딸\'이라는 대조적인 캐릭터를 기획하고 일상적인 대화(티격태격) 형태의 스크립트를 작성하여, 시청자의 몰입을 돕고 제품의 셀링 포인트를 극적으로 대비시킴.' },
+      { title: '서사 맞춤형 씬 및 에셋 생성 (Nano Banana)', desc: '나노바나나를 활용해 기획된 페르소나에 맞는 두 캐릭터의 기본 시트와 배경을 생성함. 대화의 흐름에 따라 변화하는 캐릭터의 표정과 상황에 맞는 씬을 일관된 화풍으로 추출하여 스토리보드를 시각화함.' },
+      { title: '캐릭터 액팅 및 모션 영상화 (Kling)', desc: '생성된 정지 이미지 에셋에 프리픽(Kling)의 AI 비디오 기능을 적용함. 부녀가 티격태격하는 미묘한 감정선과 제스처에 생동감을 부여하여 시트콤 같은 자연스러운 연출을 구현함.' }
+    ],
+    toolsDetail: ['Nano Banana', 'Freepik (Kling)', 'Premiere Pro']
+  },
+  {
     id: 1,
     type: 'video',
     category: 'product',
@@ -303,36 +333,6 @@ const projects = [
       { title: '프롬프트 기반 장엄한 스케일 연출', desc: 'SF 장르 특유의 스케일과 디테일 묘사를 위해, 렌즈 구경, 조명, 색감 등을 제어하는 전문적인 촬영/카메라 룩다운 프롬프트 엔지니어링 수행.' }
     ],
     toolsDetail: ['Midjourney', 'Runway Gen-2', 'ElevenLabs', 'Premiere Pro']
-  },
-  {
-    id: 104,
-    type: 'video',
-    category: 'ad',
-    categoryLabel: '제품 홍보 영상',
-    title: '복합 천연 식물 영양제',
-    desc: '[스토리텔링 커머스] 세대 공감 서사를 활용한 작물 영양제 홍보 영상. 오래된 관행을 고집하는 아빠와 새로운 혁신(자사 제품)을 권하는 딸의 유쾌한 티격태격 갈등을 통해, 지루한 기능 설명(Feature)을 매력적인 이야기(Story)로 치환하여 제품의 효능을 자연스럽게 전달하는 브랜디드 롱폼 콘텐츠.',
-    thumbnail: 'images/Thumbnails/효소아미노 썸네일.png',
-    badge: 'company',
-    badgeLabel: '🏢 회사 프로젝트',
-    tools: ['Nano Banana', 'Kling', 'Premiere Pro'],
-    driveId: '1N4obvX2d8vgcu0tt4NML0nU0qNELyRTX',
-    orientation: 'horizontal',
-    scenes: [
-      'images/주요장면/효소아미노/1.png',
-      'images/주요장면/효소아미노/2.png',
-      'images/주요장면/효소아미노/3.jpeg',
-      'images/주요장면/효소아미노/4.jpeg',
-      'images/주요장면/효소아미노/5.jpeg',
-      'images/주요장면/효소아미노/6.png'
-    ],
-    tags: ['광고', '스토리텔링'],
-    brief: '단순한 제품 효능 나열식 홍보의 높은 이탈률을 극복하기 위해 스토리텔링 기법을 도입함. \'전통 vs 혁신\'이라는 보편적인 세대 갈등을 코믹하게 풀어내어 시청자의 심리적 방어벽을 낮추고, 서사의 흐름 속에서 자연스럽게 제품의 필요성과 타당성을 설득함.',
-    process: [
-      { title: '갈등 구조 및 캐릭터 페르소나 기획', desc: '\'고집스러운 아빠\'와 \'합리적인 딸\'이라는 대조적인 캐릭터를 기획하고 일상적인 대화(티격태격) 형태의 스크립트를 작성하여, 시청자의 몰입을 돕고 제품의 셀링 포인트를 극적으로 대비시킴.' },
-      { title: '서사 맞춤형 씬 및 에셋 생성 (Nano Banana)', desc: '나노바나나를 활용해 기획된 페르소나에 맞는 두 캐릭터의 기본 시트와 배경을 생성함. 대화의 흐름에 따라 변화하는 캐릭터의 표정과 상황에 맞는 씬을 일관된 화풍으로 추출하여 스토리보드를 시각화함.' },
-      { title: '캐릭터 액팅 및 모션 영상화 (Kling)', desc: '생성된 정지 이미지 에셋에 프리픽(Kling)의 AI 비디오 기능을 적용함. 부녀가 티격태격하는 미묘한 감정선과 제스처에 생동감을 부여하여 시트콤 같은 자연스러운 연출을 구현함.' }
-    ],
-    toolsDetail: ['Nano Banana', 'Freepik (Kling)', 'Premiere Pro']
   }
 ];
 
