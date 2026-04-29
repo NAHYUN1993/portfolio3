@@ -13,8 +13,8 @@ const projects = [
     desc: '작물 영양제의 핵심 성분과 효능을 직관적으로 시각화하고, 고도화된 프롬프트 엔지니어링을 통해 \'한글 텍스트 깨짐\'을 원천 차단하여 후반 리터칭 없이 상업용 숏폼 에셋을 구축한 커머스 영상.',
     thumbnail: 'images/Thumbnails/작물영양제 기능 홍보.png',
     badge: 'company',
-    badgeLabel: '🏢 커머스 프로젝트',
-    tools: ['Antigravity', 'Nano Banana', 'Premiere Pro', 'Kling', 'Obsidian'],
+    badgeLabel: '🏢 회사 프로젝트',
+    tools: ['Nano Banana', 'Premiere Pro', 'Kling'],
     driveId: '1EClMUBheaXkb-DgJTsscnEIPpK80AA0S',
     orientation: 'vertical',
     scenes: [
@@ -32,7 +32,7 @@ const projects = [
       { title: '한글 왜곡 방어 및 최적화 프롬프트 설계', desc: 'AI 생성 시 필연적으로 발생하는 \'한글 텍스트 왜곡\' 및 \'패키지 형태 일그러짐\' 현상을 방어하기 위해 안티그래비티 환경에서 심층 리서치를 진행함. 제품 패키지의 비율과 한글 타이포그래피를 고정할 수 있는 최적의 프롬프트 구문과 네거티브 프롬프트를 자체 설계함.' },
       { title: '후반 작업 없는 고품질 에셋 생성', desc: '자체 설계한 프롬프트를 나노바나나2 모델에 적용함. 한글 텍스트 및 패키지 왜곡이 전혀 없는 상업용 수준의 고품질 제품 이미지를 한 번에 추출함. 별도의 포토샵 리터칭 없이 상업용 숏폼 에셋으로 즉시 활용 가능하게 하여 생산 효율성을 극대화함.' }
     ],
-    toolsDetail: ['Antigravity', 'Nano Banana', 'Adobe Premiere Pro', 'Kling', 'Obsidian']
+    toolsDetail: ['Nano Banana', 'Adobe Premiere Pro', 'Kling']
   },
   {
     id: 2,
@@ -43,7 +43,7 @@ const projects = [
     desc: '복잡한 분갈이 공정을 \'5분 미션\'이라는 게이미피케이션 요소로 재해석하여, 초보자의 심리적 장벽을 낮추고 제품의 올인원 편의성을 극대화한 숏폼 영상.',
     thumbnail: 'images/Thumbnails/분갈이흙2.png',
     badge: 'company',
-    badgeLabel: '🏢 커머스 프로젝트',
+    badgeLabel: '🏢 회사 프로젝트',
     tools: ['Nano Banana', 'Photoshop', 'Kling', 'Premiere Pro'],
     driveId: '1kzPULkIVpHz7PnBzJW3cBCNiU-EnxxV8',
     orientation: 'vertical',
@@ -303,6 +303,29 @@ const projects = [
       { title: '프롬프트 기반 장엄한 스케일 연출', desc: 'SF 장르 특유의 스케일과 디테일 묘사를 위해, 렌즈 구경, 조명, 색감 등을 제어하는 전문적인 촬영/카메라 룩다운 프롬프트 엔지니어링 수행.' }
     ],
     toolsDetail: ['Midjourney', 'Runway Gen-2', 'ElevenLabs', 'Premiere Pro']
+  },
+  {
+    id: 104,
+    type: 'video',
+    category: 'ad',
+    categoryLabel: '제품 홍보 영상',
+    title: '복합 천연 식물 영양제',
+    desc: '[스토리텔링 커머스] 세대 공감 서사를 활용한 작물 영양제 홍보 영상. 오래된 관행을 고집하는 아빠와 새로운 혁신(자사 제품)을 권하는 딸의 유쾌한 티격태격 갈등을 통해, 지루한 기능 설명(Feature)을 매력적인 이야기(Story)로 치환하여 제품의 효능을 자연스럽게 전달하는 브랜디드 롱폼 콘텐츠.',
+    thumbnail: '',
+    badge: 'company',
+    badgeLabel: '🏢 회사 프로젝트',
+    tools: ['Nano Banana', 'Kling', 'Premiere Pro'],
+    driveId: '1N4obvX2d8vgcu0tt4NML0nU0qNELyRTX',
+    orientation: 'horizontal',
+    scenes: [],
+    tags: ['광고', '스토리텔링'],
+    brief: '단순한 제품 효능 나열식 홍보의 높은 이탈률을 극복하기 위해 스토리텔링 기법을 도입함. \'전통 vs 혁신\'이라는 보편적인 세대 갈등을 코믹하게 풀어내어 시청자의 심리적 방어벽을 낮추고, 서사의 흐름 속에서 자연스럽게 제품의 필요성과 타당성을 설득함.',
+    process: [
+      { title: '갈등 구조 및 캐릭터 페르소나 기획', desc: '\'고집스러운 아빠\'와 \'합리적인 딸\'이라는 대조적인 캐릭터를 기획하고 일상적인 대화(티격태격) 형태의 스크립트를 작성하여, 시청자의 몰입을 돕고 제품의 셀링 포인트를 극적으로 대비시킴.' },
+      { title: '서사 맞춤형 씬 및 에셋 생성 (Nano Banana)', desc: '나노바나나를 활용해 기획된 페르소나에 맞는 두 캐릭터의 기본 시트와 배경을 생성함. 대화의 흐름에 따라 변화하는 캐릭터의 표정과 상황에 맞는 씬을 일관된 화풍으로 추출하여 스토리보드를 시각화함.' },
+      { title: '캐릭터 액팅 및 모션 영상화 (Kling)', desc: '생성된 정지 이미지 에셋에 프리픽(Kling)의 AI 비디오 기능을 적용함. 부녀가 티격태격하는 미묘한 감정선과 제스처에 생동감을 부여하여 시트콤 같은 자연스러운 연출을 구현함.' }
+    ],
+    toolsDetail: ['Nano Banana', 'Freepik (Kling)', 'Premiere Pro']
   }
 ];
 
